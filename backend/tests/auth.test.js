@@ -56,4 +56,18 @@ describe("POST /api/auth/login", () => {
       message: "Login successful",
     });
   });
+
+  it("should reject login for an unregistered email", async () => {
+    const response = await request(app)
+      .post("/api/auth/login")
+      .send({
+        email: "unknown@gmail.com",
+        password: "Password123",
+      });
+
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({
+      message: "Invalid email or password",
+    });
+  });
 });
