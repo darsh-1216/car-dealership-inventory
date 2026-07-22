@@ -58,13 +58,14 @@ exports.getVehicles = (req, res) => {
 };
 
 exports.searchVehicles = (req, res) => {
-  const { make, category } = req.query;
+  const { make, model, category } = req.query;
 
   const filteredVehicles = vehicles.filter((vehicle) => {
     const matchesMake = !make || vehicle.make === make;
+    const matchesModel = !model || vehicle.model === model;
     const matchesCategory = !category || vehicle.category === category;
 
-    return matchesMake && matchesCategory;
+    return matchesMake && matchesModel && matchesCategory;
   });
 
   return res.status(200).json(filteredVehicles);
