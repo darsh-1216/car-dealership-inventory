@@ -22,6 +22,12 @@ app.post("/api/auth/register", (req, res) => {
 });
 
 app.post("/api/auth/login", (req, res) => {
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).json({
+      message: "Email and password are required",
+    });
+  }
+
   const user = users.find(
     (registeredUser) =>
       registeredUser.email === req.body.email &&
