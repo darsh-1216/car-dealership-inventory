@@ -192,3 +192,48 @@ For now, only add the integration test.
 - Login returns **401 Unauthorized** for incorrect passwords.
 - All tests passed successfully.
 - No changes to the login implementation were required because the existing feature already satisfied this behavior.
+
+---
+
+## Session 11 - Login Validation (RED)
+
+### User Prompt
+I'd like to validate the login request before attempting authentication.
+
+Can you add integration tests for login requests with a missing email and a missing password?
+
+For now, only add the integration tests.
+
+### AI Assistance
+- Added integration tests for missing email and missing password.
+- Expected HTTP 400 Bad Request for both scenarios.
+- Verified the tests failed before implementation.
+
+### Outcome
+- Login validation integration tests created.
+- RED phase completed.
+
+---
+
+## Session 12 - Login Validation (GREEN)
+
+### User Prompt
+The login validation integration tests are failing.
+
+Can you update the existing login endpoint so it validates the request before authentication?
+
+If either the email or password is missing, return HTTP 400 with the appropriate error message.
+
+Keep the existing authentication logic unchanged.
+
+### AI Assistance
+- Added request validation to the login endpoint.
+- Checked that both email and password are present before authentication.
+- Preserved the existing authentication flow for valid requests.
+
+### Outcome
+- Login returns **400 Bad Request** when required credentials are missing.
+- Existing authentication behavior remains unchanged.
+- All tests passed successfully.
+- GREEN phase completed.
+
