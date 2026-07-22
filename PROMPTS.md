@@ -675,3 +675,58 @@ Improved code organization and reduced duplication while preserving application 
 
 ---
 
+## Session 29 - Vehicle Update (RED)
+
+### User Prompt
+
+I want to implement the `PUT /api/vehicles/:id` endpoint using the Test-Driven Development (TDD) approach.
+
+Start with the RED phase by writing Jest test cases only. Do not implement the production code yet.
+
+The test suite should cover:
+- Returning **401 Unauthorized** when the Authorization header is missing.
+- Returning **401 Unauthorized** when the provided JWT is invalid.
+- Returning **404 Not Found** when the requested vehicle ID does not exist.
+- Returning **200 OK** when an authenticated user successfully updates an existing vehicle.
+
+Follow the existing project structure, reuse the current authentication flow, and keep all previously implemented tests passing. The newly added tests should fail because the endpoint has not been implemented yet.
+
+### AI Assistance
+
+- Designed the complete test suite for the vehicle update endpoint before writing any production code.
+- Covered authentication, authorization, resource existence, and successful update scenarios.
+- Followed the Test-Driven Development (TDD) workflow by intentionally keeping the implementation absent.
+- Ensured the new tests integrated with the existing Jest test structure.
+
+### Outcome
+
+Successfully completed the RED phase by adding failing test cases for the vehicle update endpoint. Existing tests continued to pass while the newly added update endpoint tests failed as expected.
+
+---
+
+## Session 30 - Vehicle Update (GREEN)
+
+### User Prompt
+
+Implement the `PUT /api/vehicles/:id` endpoint so that all previously written RED phase tests pass.
+
+Reuse the existing vehicle validation helper instead of duplicating validation logic. Find the requested vehicle using the provided ID and return **404 Not Found** if it does not exist.
+
+When a valid vehicle is found, update all editable fields (`make`, `model`, `category`, `price`, and `quantity`) and return the updated vehicle in the response.
+
+Keep the existing project structure unchanged, follow the current coding style, and ensure that every previously implemented test continues to pass.
+
+### AI Assistance
+
+- Implemented the vehicle update endpoint according to the RED phase requirements.
+- Reused the shared validation helper to avoid duplicate validation logic.
+- Added vehicle lookup by ID with proper `404 Not Found` handling.
+- Updated all editable vehicle fields and returned the updated vehicle object.
+- Preserved compatibility with the existing in-memory data store and project architecture.
+
+### Outcome
+
+Successfully completed the GREEN phase for the vehicle update endpoint. All vehicle update tests passed along with the existing authentication, vehicle creation, listing, and search tests, resulting in **35/35 passing tests**.
+
+---
+
