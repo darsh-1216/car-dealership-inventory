@@ -87,4 +87,26 @@ describe("POST /api/auth/login", () => {
       message: "Invalid email or password",
     });
   });
+
+  it("should reject login without an email", async () => {
+    const response = await request(app).post("/api/auth/login").send({
+      password: "Password123",
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: "Email and password are required",
+    });
+  });
+
+  it("should reject login without a password", async () => {
+    const response = await request(app).post("/api/auth/login").send({
+      email: "darshan@gmail.com",
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: "Email and password are required",
+    });
+  });
 });
