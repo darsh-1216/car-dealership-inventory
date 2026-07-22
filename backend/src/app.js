@@ -21,6 +21,20 @@ app.post("/api/auth/register", (req, res) => {
   });
 });
 
+app.post("/api/auth/login", (req, res) => {
+  const user = users.find(
+    (registeredUser) =>
+      registeredUser.email === req.body.email &&
+      registeredUser.password === req.body.password
+  );
+
+  if (user) {
+    return res.status(200).json({
+      message: "Login successful",
+    });
+  }
+});
+
 app.get("/", (req, res) => {
   res.json({
     message: "Server is running",
