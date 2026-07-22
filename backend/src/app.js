@@ -1,17 +1,27 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 
 const app = express();
+
+// Temporary in-memory storage for registered users.
+// This will be replaced with a database in a later iteration.
 const users = [];
+
+// Temporary secret key used for signing JWTs.
+// This will be moved to environment variables in a future iteration.
+const JWT_SECRET = "secret-key";
 
 app.use(express.json());
 
 app.post("/api/auth/register", (req, res) => {
+  // Validate required registration fields.
   if (!req.body.email || !req.body.password) {
     return res.status(400).json({
       message: "Email and password are required",
     });
   }
 
+  // Check whether the email is already registered.
   const emailExists = users.some((user) => user.email === req.body.email);
 
   if (emailExists) {
@@ -20,37 +30,53 @@ app.post("/api/auth/register", (req, res) => {
     });
   }
 
+  // Store the new user in memory.
   users.push(req.body);
 
-  res.status(201).json({
+  return res.status(201).json({
     message: "User registered successfully",
   });
 });
 
 app.post("/api/auth/login", (req, res) => {
+  // Validate required login fields.
   if (!req.body.email || !req.body.password) {
     return res.status(400).json({
       message: "Email and password are required",
     });
   }
 
+  // Find a user with matching email and password.
   const user = users.find(
     (registeredUser) =>
       registeredUser.email === req.body.email &&
       registeredUser.password === req.body.password
   );
 
-  if (user) {
-    return res.status(200).json({
-      message: "Login successful",
+  // Reject login if credentials are invalid.
+  if (!user) {
+    return res.status(401).json({
+      message: "Invalid email or password",
     });
   }
 
-  return res.status(401).json({
-    message: "Invalid email or password",
+  // Generate a JWT for the authenticated user.
+  const token = jwt.sign(
+    { email: user.email },
+    JWT_SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
+
+  // Return the authentication token.
+  return res.status(200).json({
+    message: "Login successful",
+    token,
   });
 });
 
+// Health check endpoint.
 app.get("/", (req, res) => {
   res.json({
     message: "Server is running",
