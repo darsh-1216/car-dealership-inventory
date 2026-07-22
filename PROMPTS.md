@@ -730,3 +730,66 @@ Successfully completed the GREEN phase for the vehicle update endpoint. All vehi
 
 ---
 
+## Session 31 - Vehicle Delete (RED)
+
+### User Prompt
+
+I want to implement the `DELETE /api/vehicles/:id` endpoint using the Test-Driven Development (TDD) approach.
+
+Start with the RED phase by writing Jest test cases only. Do not implement the production code yet.
+
+The test suite should cover:
+- Returning **401 Unauthorized** when the Authorization header is missing.
+- Returning **401 Unauthorized** when the provided JWT is invalid.
+- Returning **404 Not Found** when the requested vehicle ID does not exist.
+- Returning **200 OK** when an authenticated user successfully deletes an existing vehicle.
+- Verifying that the deleted vehicle is removed from the in-memory data store.
+
+Follow the existing project structure, reuse the current authentication flow, and keep all previously implemented tests passing. The newly added tests should fail because the endpoint has not been implemented yet.
+
+### AI Assistance
+
+- Added comprehensive Jest test cases for the vehicle delete endpoint.
+- Covered authentication, authorization, resource existence, successful deletion, and in-memory data verification.
+- Followed the Test-Driven Development (TDD) workflow by writing tests before implementation.
+- Left the production code unchanged to ensure the new tests failed during the RED phase.
+
+### Outcome
+
+Successfully completed the RED phase by adding failing test cases for the vehicle delete endpoint. Existing tests continued to pass while the newly added delete endpoint tests failed as expected.
+
+---
+
+## Session 32 - Vehicle Delete (GREEN)
+
+### User Prompt
+
+Implement the `DELETE /api/vehicles/:id` endpoint so that all previously written RED phase tests pass.
+
+Reuse the existing authentication middleware and follow the current project structure.
+
+Requirements:
+- Return **401 Unauthorized** for missing or invalid JWTs using the existing middleware.
+- Find the requested vehicle using the provided ID.
+- Return **404 Not Found** if the vehicle does not exist.
+- Remove the vehicle from the in-memory data store.
+- Return **200 OK** with the response:
+  ```json
+  {
+    "message": "Vehicle deleted successfully"
+  }
+  ```
+- Ensure the deleted vehicle is no longer present in the in-memory data store.
+- Keep all existing tests passing without changing endpoint behavior.
+
+### AI Assistance
+
+- Implemented the vehicle delete endpoint according to the RED phase requirements.
+- Reused the existing authentication middleware without introducing changes to the authentication flow.
+- Added vehicle lookup using the provided ID and returned a **404 Not Found** response when the vehicle was not found.
+- Removed the vehicle from the in-memory data store using the existing data structure.
+- Returned the expected success response while preserving the existing project architecture and coding style.
+
+### Outcome
+
+Successfully completed the GREEN phase for the vehicle delete endpoint. All delete endpoint tests passed successfully along with the existing authentication, vehicle creation, listing, search, and update tests, resulting in **40/40 passing tests**.
