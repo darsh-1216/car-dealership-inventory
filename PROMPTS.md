@@ -454,3 +454,100 @@ Requirements:
 - Existing authentication functionality remained unchanged.
 - All integration tests passed successfully.
 - GREEN phase completed successfully.
+
+---
+
+## Session 20 - Vehicle Creation (RED Phase)
+
+### User Prompt
+
+The authentication system and JWT verification middleware have already been completed.
+
+We are now starting the Vehicle module following strict Test-Driven Development (TDD).
+
+Requirements:
+- Create failing integration tests for POST /api/vehicles.
+- The endpoint must require JWT authentication.
+- Test unauthorized access, invalid JWT, successful vehicle creation, and required field validation.
+- A vehicle must contain make, model, category, price, and quantity.
+- Reuse the existing authentication flow to obtain a valid JWT.
+- Do not implement the feature.
+- Do not modify any existing authentication or JWT tests.
+
+### AI Assistance
+
+- Created a new integration test suite for vehicle creation.
+- Added authentication and validation test cases.
+- Reused the existing authentication flow for protected endpoint testing.
+- Preserved all existing functionality without implementing the feature.
+
+### Outcome
+
+- Vehicle creation tests failed as expected.
+- RED phase completed successfully.
+
+---
+
+## Session 21 - Vehicle Creation (GREEN Phase)
+
+### User Prompt
+
+The vehicle creation tests have been completed and are currently failing as expected.
+
+Now complete the GREEN phase of Test-Driven Development (TDD).
+
+Requirements:
+- Implement POST /api/vehicles.
+- Protect the endpoint using the existing JWT authentication middleware.
+- Store vehicles using in-memory storage.
+- Validate all required fields.
+- Return existing response messages and status codes.
+- Do not implement any additional vehicle features.
+- Do not modify any existing authentication or JWT functionality.
+- Ensure all tests pass successfully.
+
+### AI Assistance
+
+- Implemented the vehicle creation controller.
+- Added the vehicle route protected by the existing JWT middleware.
+- Registered the route in the application.
+- Added in-memory vehicle storage and validation.
+- Preserved existing authentication functionality and response behavior.
+
+### Outcome
+
+- Authenticated users can successfully create vehicles.
+- Validation rules work as expected.
+- Existing functionality remained unchanged.
+- All integration tests passed successfully.
+- GREEN phase completed successfully.
+
+---
+
+## Session 22 - Vehicle Creation (REFACTOR Phase)
+
+### User Prompt
+
+All vehicle creation tests are passing.
+
+Now complete the REFACTOR phase of Test-Driven Development (TDD).
+
+Requirements:
+- Improve code organization without changing application behavior.
+- Move the in-memory vehicle storage into a dedicated module.
+- Preserve all existing functionality, API responses, validation messages, and tests.
+- Do not add any new features.
+
+### AI Assistance
+
+- Extracted the shared in-memory vehicle storage into a dedicated data module.
+- Updated the controller to use the shared storage module.
+- Improved code organization while preserving behavior.
+- Verified that all existing tests continued to pass.
+
+### Outcome
+
+- Vehicle storage is now organized in a reusable module.
+- Application behavior remained unchanged.
+- All integration tests passed successfully.
+- REFACTOR phase completed successfully.
