@@ -63,4 +63,109 @@ describe("GET /api/vehicles", () => {
       },
     ]);
   });
+
+  it("returns the first page of vehicles when page and limit are provided", async () => {
+    const token = await registerAndLogin();
+
+    await request(app)
+      .post("/api/vehicles")
+      .set("Authorization", `Bearer ${token}`)
+      .send(vehicle);
+
+    await request(app)
+      .post("/api/vehicles")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        ...vehicle,
+        make: "Honda",
+        model: "Civic",
+      });
+
+    const response = await request(app)
+      .get("/api/vehicles")
+      .query({ page: 1, limit: 1 })
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      page: 1,
+      limit: 1,
+      total: 2,
+      totalPages: 2,
+      data: [
+        {
+          id: 1,
+          make: "Toyota",
+          model: "Fortuner",
+          category: "SUV",
+          price: 4500000,
+          quantity: 5,
+        },
+      ],
+    });
+  });
+
+  it("returns the correct subset of vehicles for subsequent pages", async () => {
+    const token = await registerAndLogin();
+
+    await request(app)
+      .post("/api/vehicles")
+      .set("Authorization", `Bearer ${token}`)
+      .send(vehicle);
+
+    await request(app)
+      .post("/api/vehicles")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        ...vehicle,
+        make: "Honda",
+        model: "Civic",
+      });
+
+    const response = await request(app)
+      .get("/api/vehicles")
+      .query({ page: 2, limit: 1 })
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      page: 2,
+      limit: 1,
+      total: 2,
+      totalPages: 2,
+      data: [
+        {
+          id: 2,
+          make: "Honda",
+          model: "Civic",
+          category: "SUV",
+          price: 4500000,
+          quantity: 5,
+        },
+      ],
+    });
+  });
+
+  it("returns an empty data array when the requested page exceeds the available pages", async () => {
+    const token = await registerAndLogin();
+
+    await request(app)
+      .post("/api/vehicles")
+      .set("Authorization", `Bearer ${token}`)
+      .send(vehicle);
+
+    const response = await request(app)
+      .get("/api/vehicles")
+      .query({ page: 2, limit: 1 })
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      page: 2,
+      limit: 1,
+      total: 1,
+      totalPages: 1,
+      data: [],
+    });
+  });
 });
