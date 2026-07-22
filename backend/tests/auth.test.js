@@ -22,7 +22,7 @@ describe("POST /api/auth/register", () => {
   it("should reject registration with an existing email", async () => {
     const registrationData = {
       name: "Darsh",
-      email: "darsh@gmail.com",
+      email: "duplicate@gmail.com",
       password: "Password123",
     };
 
