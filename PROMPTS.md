@@ -237,3 +237,46 @@ Keep the existing authentication logic unchanged.
 - All tests passed successfully.
 - GREEN phase completed.
 
+---
+
+## Session 13 - Registration Validation (RED)
+
+### User Prompt
+I'd like to validate the registration request before creating a new user.
+
+Can you add integration tests for registration requests with a missing email and a missing password?
+
+For now, only add the integration tests.
+
+### AI Assistance
+- Added integration tests for missing email and missing password.
+- Expected HTTP 400 Bad Request for both scenarios.
+- Verified the tests failed before implementation.
+
+### Outcome
+- Registration validation integration tests created.
+- RED phase completed.
+
+---
+
+## Session 14 - Registration Validation (GREEN)
+
+### User Prompt
+The registration validation integration tests are failing.
+
+Can you update the existing registration endpoint so it validates the request before checking for duplicate users or creating a new user?
+
+If either the email or password is missing, return HTTP 400 with the appropriate error message.
+
+Keep the existing registration logic unchanged.
+
+### AI Assistance
+- Added request validation before duplicate email checks.
+- Verified that both email and password are present before user creation.
+- Preserved the existing registration flow for valid requests.
+
+### Outcome
+- Registration returns **400 Bad Request** when required credentials are missing.
+- Existing registration behavior remains unchanged.
+- All tests passed successfully.
+- GREEN phase completed.
