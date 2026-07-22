@@ -6,6 +6,12 @@ const users = [];
 app.use(express.json());
 
 app.post("/api/auth/register", (req, res) => {
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).json({
+      message: "Email and password are required",
+    });
+  }
+
   const emailExists = users.some((user) => user.email === req.body.email);
 
   if (emailExists) {
