@@ -33,6 +33,10 @@ app.post("/api/auth/login", (req, res) => {
       message: "Login successful",
     });
   }
+
+  return res.status(401).json({
+    message: "Invalid email or password",
+  });
 });
 
 app.get("/", (req, res) => {
