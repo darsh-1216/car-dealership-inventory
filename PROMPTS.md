@@ -828,30 +828,148 @@ Successfully completed the RED phase by adding failing test cases for retrieving
 
 ---
 
-## Session 34 - Get Vehicle By ID (GREEN)
+## Session 35 - Vehicle Test Suite Refactor (REFACTOR)
 
 ### User Prompt
 
-Implement the `GET /api/vehicles/:id` endpoint so that all previously written RED phase tests pass.
+The vehicle API test suite has grown significantly as new CRUD endpoints have been implemented. The current `vehicle.test.js` file contains all endpoint tests, making it difficult to navigate and maintain.
 
-Reuse the existing authentication middleware and follow the current project structure.
+Refactor the existing test suite without changing any production code or test behavior.
 
 Requirements:
-- Return **401 Unauthorized** for missing or invalid JWTs using the existing middleware.
-- Find the requested vehicle using the provided ID.
-- Return **404 Not Found** if the vehicle does not exist.
-- Return **200 OK** with the requested vehicle object when the vehicle exists.
-- Do not modify the existing vehicle object or response structure.
-- Keep all existing tests passing without changing endpoint behavior.
-- Follow the existing coding style and project architecture.
+- Split the large `vehicle.test.js` file into separate test files based on functionality.
+- Create dedicated test files for create, list, search, get by ID, update, and delete operations.
+- Extract common vehicle data and authentication logic into a shared helper file to eliminate duplicated code.
+- Keep all existing assertions and endpoint behavior unchanged.
+- Ensure the entire test suite continues to pass after the refactor.
+- Follow the existing project structure and coding style.
 
 ### AI Assistance
 
-- Implemented the vehicle retrieval endpoint according to the RED phase requirements.
-- Reused the existing authentication middleware without modifying the authentication flow.
-- Added vehicle lookup using the provided ID and returned a **404 Not Found** response when the vehicle was not found.
-- Returned the requested vehicle object while preserving the existing response structure and project architecture.
+- Split the original `vehicle.test.js` file into multiple feature-specific test files for better organization.
+- Created a shared `vehicleTestUtils.js` helper containing reusable vehicle data and the authentication helper used across all test files.
+- Updated every test file to reuse the shared helper instead of duplicating setup code.
+- Removed the original combined test file after confirming that all tests had been successfully migrated.
+- No production code was modified during the refactor.
 
 ### Outcome
 
-Successfully completed the GREEN phase for the vehicle retrieval endpoint. All retrieval endpoint tests passed successfully along with the existing authentication and vehicle management tests.
+Successfully completed the REFACTOR phase by reorganizing the vehicle API test suite into smaller, feature-based files. The shared helper reduced duplicated setup code and improved maintainability while preserving the existing functionality. All previously implemented tests continued to pass successfully without requiring any production code changes.
+
+---
+
+## Session 36 - Vehicle Search by Model (RED)
+
+### User Prompt
+
+The existing vehicle search endpoint currently supports searching by vehicle make and category. I now want to extend the endpoint to also support searching by vehicle model using the Test-Driven Development (TDD) approach.
+
+Start with the RED phase by writing only the required Jest test cases.
+
+Requirements:
+- Do not modify any production code.
+- Add test cases for searching vehicles using the `model` query parameter.
+- Ensure the endpoint returns only vehicles whose model matches the provided query.
+- Preserve the existing search functionality for make and category.
+- Keep all existing tests passing while ensuring the newly added model search tests fail.
+- Follow the existing project structure and coding style.
+
+### AI Assistance
+
+- Added new RED phase test cases covering vehicle search using the `model` query parameter.
+- Reused the existing authentication helper and vehicle test data to keep the tests consistent.
+- Preserved all existing search test cases for make and category.
+- Did not modify any production code so that the newly added tests failed as expected.
+
+### Outcome
+
+Successfully completed the RED phase for vehicle search by model. Existing search functionality remained unchanged, while the newly added model search tests failed as expected, confirming that the feature had not yet been implemented.
+
+---
+
+## Session 37 - Vehicle Search by Model (GREEN)
+
+### User Prompt
+
+Implement support for searching vehicles by model so that all previously written RED phase tests pass.
+
+Reuse the existing authentication middleware and preserve the current search functionality.
+
+Requirements:
+- Support the optional `model` query parameter.
+- Continue supporting searches by make and category.
+- Allow all supported filters to work together.
+- Preserve the existing response structure.
+- Do not modify any existing test cases.
+- Keep the implementation minimal while following the current coding style.
+
+### AI Assistance
+
+- Extended the existing search logic to support filtering vehicles by the `model` query parameter.
+- Preserved the existing search behavior for make and category without introducing any breaking changes.
+- Implemented the feature using the minimum production code required to satisfy the RED phase tests.
+- Reused the existing endpoint structure and authentication middleware without modification.
+
+### Outcome
+
+Successfully completed the GREEN phase for vehicle search by model. The endpoint now supports searching by make, category, and model while maintaining the existing response structure. All search-related tests and previously implemented API tests passed successfully.
+
+---
+
+## Session 38 - Vehicle Pagination (RED)
+
+### User Prompt
+
+The vehicle listing endpoint currently returns all vehicles in a single response. I want to enhance this endpoint by introducing optional pagination using the Test-Driven Development (TDD) approach.
+
+Begin with the RED phase by writing only the required Jest test cases.
+
+Requirements:
+- Do not modify any production code.
+- Add test cases for the optional `page` and `limit` query parameters.
+- Verify that the endpoint returns the correct page of vehicles along with pagination metadata.
+- Ensure an empty data array is returned when the requested page exceeds the available pages.
+- Preserve the existing behavior when pagination parameters are not provided.
+- Keep all existing tests passing while ensuring the new pagination tests fail.
+
+### AI Assistance
+
+- Added RED phase test cases covering pagination for the vehicle listing endpoint.
+- Verified the first page, subsequent pages, and requests for pages beyond the available data.
+- Preserved the existing test covering the default behavior when pagination parameters are omitted.
+- Left the production code unchanged so that the newly introduced pagination tests failed as expected.
+
+### Outcome
+
+Successfully completed the RED phase for vehicle pagination. Existing vehicle listing functionality continued to work correctly, while the newly added pagination tests failed as expected, indicating that the implementation was still pending.
+
+---
+
+## Session 39 - Vehicle Pagination (GREEN)
+
+### User Prompt
+
+Implement optional pagination for the vehicle listing endpoint so that all previously written RED phase tests pass.
+
+Reuse the existing authentication middleware and preserve the existing endpoint behavior whenever pagination is not requested.
+
+Requirements:
+- Support the optional `page` and `limit` query parameters.
+- Continue returning all vehicles when pagination parameters are omitted.
+- Return pagination metadata including page, limit, total, totalPages, and data.
+- Return an empty data array when the requested page exceeds the available pages.
+- Do not modify any existing test cases.
+- Keep the implementation minimal and consistent with the existing coding style.
+
+### AI Assistance
+
+- Implemented pagination by processing the optional `page` and `limit` query parameters.
+- Preserved the original behavior of returning all vehicles when pagination was not requested.
+- Calculated the total number of vehicles, total pages, and returned the appropriate subset of data for the requested page.
+- Returned an empty data array for requests beyond the available pages while preserving the expected response structure.
+
+### Outcome
+
+Successfully completed the GREEN phase for vehicle pagination. The vehicle listing endpoint now supports optional pagination while maintaining backward compatibility with the original behavior. All pagination tests and previously implemented API tests passed successfully.
+
+---
