@@ -590,3 +590,88 @@ Improved the test code by moving the shared vehicle object and authentication he
 
 ### Outcome
 Successfully completed the REFACTOR phase while preserving functionality and maintaining a fully passing test suite.
+
+---
+
+## Session 26 - Vehicle Search (RED)
+
+### User Prompt
+
+Create failing tests for a protected `GET /api/vehicles/search` endpoint following the RED phase of TDD.
+
+Requirements:
+- Protect the endpoint using the existing JWT middleware.
+- Add tests for missing and invalid JWT.
+- Test empty search results.
+- Test filtering by `make`.
+- Test filtering by `category`.
+- Test filtering using both `make` and `category`.
+- Reuse the existing vehicle creation endpoint to prepare test data.
+- Do not implement the endpoint or modify existing functionality.
+
+### AI Assistance
+
+- Added a new test suite for `GET /api/vehicles/search`.
+- Covered authentication failure scenarios.
+- Added tests for empty results and search filtering.
+- Reused the existing vehicle creation endpoint for test setup.
+- Left the implementation unchanged to keep the tests failing.
+
+### Outcome
+
+Created a complete failing test suite for vehicle search. Existing functionality remained unchanged, and the new tests failed as expected, completing the RED phase.
+
+---
+
+## Session 27 - Vehicle Search (GREEN)
+
+### User Prompt
+
+Implement the minimum code required to make all `GET /api/vehicles/search` tests pass.
+
+Requirements:
+- Protect the endpoint using the existing JWT middleware.
+- Read `make` and `category` from query parameters.
+- Return matching vehicles from the in-memory collection.
+- Return an empty array when no vehicles match.
+- Do not refactor existing code or add extra features.
+
+### AI Assistance
+
+- Added the protected search route.
+- Implemented the `searchVehicles` controller.
+- Filtered vehicles using `make` and `category`.
+- Returned the filtered results with HTTP 200.
+- Kept the implementation minimal.
+
+### Outcome
+
+Successfully implemented the vehicle search endpoint with the minimum required logic. All search tests passed without introducing additional functionality.
+
+---
+
+## Session 28 - Vehicle Search (REFACTOR)
+
+### User Prompt
+
+Refactor the vehicle search implementation without changing its behavior.
+
+Requirements:
+- Improve readability.
+- Reduce duplicated validation logic where appropriate.
+- Keep all existing tests passing.
+- Do not add new features or modify endpoint behavior.
+
+### AI Assistance
+
+- Extracted vehicle validation into a reusable helper function.
+- Centralized validation error messages.
+- Simplified the vehicle creation controller.
+- Preserved the existing search implementation and functionality.
+
+### Outcome
+
+Improved code organization and reduced duplication while preserving application behavior. All tests continued to pass after refactoring.
+
+---
+
