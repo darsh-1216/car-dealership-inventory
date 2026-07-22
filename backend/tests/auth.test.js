@@ -7,6 +7,7 @@ describe("POST /api/auth/register", () => {
     const response = await request(app)
       .post("/api/auth/register")
       .send({
+        name: "Darsh",
         email: "darsh@gmail.com",
         password: "Password123",
       });
