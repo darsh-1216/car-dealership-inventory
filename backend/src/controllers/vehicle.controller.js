@@ -100,6 +100,19 @@ exports.updateVehicle = (req, res) => {
   return res.status(200).json(vehicle);
 };
 
+exports.getVehicleById = (req, res) => {
+  const { id } = req.params;
+  const vehicle = vehicles.find((vehicle) => vehicle.id === Number(id));
+
+  if (!vehicle) {
+    return res.status(404).json({
+      message: "Vehicle not found",
+    });
+  }
+
+  return res.status(200).json(vehicle);
+};
+
 exports.deleteVehicle = (req, res) => {
   const { id } = req.params;
   const vehicleIndex = vehicles.findIndex(
