@@ -27,3 +27,7 @@ exports.createVehicle = (req, res) => {
 
   return res.status(201).json({ message: "Vehicle created successfully" });
 };
+
+exports.getVehicles = (req, res) => {
+  return res.status(200).json(vehicles);
+};
