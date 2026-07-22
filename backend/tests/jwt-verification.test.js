@@ -24,9 +24,20 @@ describe("JWT Verification Middleware", () => {
     });
 
     it("returns 200 when a valid JWT is provided", async () => {
+      await request(app).post("/api/auth/register").send({
+        name: "JWT User",
+        email: "jwt-verify-user@example.com",
+        password: "Password123",
+      });
+
+      const loginResponse = await request(app).post("/api/auth/login").send({
+        email: "jwt-verify-user@example.com",
+        password: "Password123",
+      });
+
       const response = await request(app)
         .get("/api/protected")
-        .set("Authorization", "Bearer valid-jwt-token");
+        .set("Authorization", `Bearer ${loginResponse.body.token}`);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
