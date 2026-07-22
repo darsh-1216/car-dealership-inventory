@@ -1,27 +1,39 @@
 const vehicles = require("../data/vehicles");
 
-exports.createVehicle = (req, res) => {
+const requiredFieldMessages = {
+  make: "Make is required",
+  model: "Model is required",
+  category: "Category is required",
+  price: "Price is required",
+  quantity: "Quantity is required",
+};
+
+const validateVehicleInput = (req, res) => {
   const { make, model, category, price, quantity } = req.body;
 
-  if (!make) {
-    return res.status(400).json({ message: "Make is required" });
+  const fields = ["make", "model", "category", "price", "quantity"];
+
+  for (const field of fields) {
+    if (field === "price" || field === "quantity") {
+      if (req.body[field] === undefined || req.body[field] === null) {
+        return res.status(400).json({ message: requiredFieldMessages[field] });
+      }
+    } else if (!req.body[field]) {
+      return res.status(400).json({ message: requiredFieldMessages[field] });
+    }
   }
 
-  if (!model) {
-    return res.status(400).json({ message: "Model is required" });
+  return null;
+};
+
+exports.createVehicle = (req, res) => {
+  const validationError = validateVehicleInput(req, res);
+
+  if (validationError) {
+    return validationError;
   }
 
-  if (!category) {
-    return res.status(400).json({ message: "Category is required" });
-  }
-
-  if (price === undefined || price === null) {
-    return res.status(400).json({ message: "Price is required" });
-  }
-
-  if (quantity === undefined || quantity === null) {
-    return res.status(400).json({ message: "Quantity is required" });
-  }
+  const { make, model, category, price, quantity } = req.body;
 
   vehicles.push({ make, model, category, price, quantity });
 
