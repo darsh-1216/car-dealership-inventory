@@ -31,3 +31,16 @@ exports.createVehicle = (req, res) => {
 exports.getVehicles = (req, res) => {
   return res.status(200).json(vehicles);
 };
+
+exports.searchVehicles = (req, res) => {
+  const { make, category } = req.query;
+
+  const filteredVehicles = vehicles.filter((vehicle) => {
+    const matchesMake = !make || vehicle.make === make;
+    const matchesCategory = !category || vehicle.category === category;
+
+    return matchesMake && matchesCategory;
+  });
+
+  return res.status(200).json(filteredVehicles);
+};
