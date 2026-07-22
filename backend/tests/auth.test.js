@@ -41,3 +41,19 @@ describe("POST /api/auth/register", () => {
     });
   });
 });
+
+describe("POST /api/auth/login", () => {
+  it("should log in a user successfully", async () => {
+    const response = await request(app)
+      .post("/api/auth/login")
+      .send({
+        email: "darsh@gmail.com",
+        password: "Password123",
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      message: "Login successful",
+    });
+  });
+});
