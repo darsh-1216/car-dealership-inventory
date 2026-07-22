@@ -793,3 +793,65 @@ Requirements:
 ### Outcome
 
 Successfully completed the GREEN phase for the vehicle delete endpoint. All delete endpoint tests passed successfully along with the existing authentication, vehicle creation, listing, search, and update tests, resulting in **40/40 passing tests**.
+
+---
+
+## Session 33 - Get Vehicle By ID (RED)
+
+### User Prompt
+
+I want to implement the `GET /api/vehicles/:id` endpoint using the Test-Driven Development (TDD) approach.
+
+Start with the RED phase by writing Jest test cases only. Do not implement the production code yet.
+
+The test suite should cover:
+- Returning **401 Unauthorized** when the Authorization header is missing.
+- Returning **401 Unauthorized** when the provided JWT is invalid.
+- Returning **404 Not Found** when the requested vehicle ID does not exist.
+- Returning **200 OK** when an authenticated user successfully retrieves an existing vehicle by its ID.
+- Verifying that the returned response exactly matches the stored vehicle object.
+
+Reuse the existing authentication middleware and testing utilities.
+
+Follow the current project structure and coding style. Keep all previously implemented tests passing while ensuring the newly added tests fail because the endpoint has not yet been implemented.
+
+### AI Assistance
+
+- Added comprehensive Jest test cases for retrieving a vehicle by its ID.
+- Covered authentication, authorization, missing vehicle, and successful retrieval scenarios.
+- Followed the Test-Driven Development (TDD) workflow by writing tests before implementation.
+- Left the production code unchanged to ensure the new tests failed during the RED phase.
+
+### Outcome
+
+Successfully completed the RED phase by adding failing test cases for retrieving a vehicle by its ID. Existing tests continued to pass while the newly added retrieval endpoint tests failed as expected.
+
+---
+
+## Session 34 - Get Vehicle By ID (GREEN)
+
+### User Prompt
+
+Implement the `GET /api/vehicles/:id` endpoint so that all previously written RED phase tests pass.
+
+Reuse the existing authentication middleware and follow the current project structure.
+
+Requirements:
+- Return **401 Unauthorized** for missing or invalid JWTs using the existing middleware.
+- Find the requested vehicle using the provided ID.
+- Return **404 Not Found** if the vehicle does not exist.
+- Return **200 OK** with the requested vehicle object when the vehicle exists.
+- Do not modify the existing vehicle object or response structure.
+- Keep all existing tests passing without changing endpoint behavior.
+- Follow the existing coding style and project architecture.
+
+### AI Assistance
+
+- Implemented the vehicle retrieval endpoint according to the RED phase requirements.
+- Reused the existing authentication middleware without modifying the authentication flow.
+- Added vehicle lookup using the provided ID and returned a **404 Not Found** response when the vehicle was not found.
+- Returned the requested vehicle object while preserving the existing response structure and project architecture.
+
+### Outcome
+
+Successfully completed the GREEN phase for the vehicle retrieval endpoint. All retrieval endpoint tests passed successfully along with the existing authentication and vehicle management tests.
