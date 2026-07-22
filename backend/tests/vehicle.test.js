@@ -84,6 +84,7 @@ describe("GET /api/vehicles", () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
       {
+        id: 1,
         make: "Toyota",
         model: "Fortuner",
         category: "SUV",
@@ -156,6 +157,7 @@ describe("GET /api/vehicles/search", () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
       {
+        id: 1,
         make: "Toyota",
         model: "Fortuner",
         category: "SUV",
@@ -191,6 +193,7 @@ describe("GET /api/vehicles/search", () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
       {
+        id: 1,
         make: "Toyota",
         model: "Fortuner",
         category: "SUV",
@@ -226,6 +229,7 @@ describe("GET /api/vehicles/search", () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
       {
+        id: 1,
         make: "Toyota",
         model: "Fortuner",
         category: "SUV",
@@ -315,6 +319,7 @@ describe("PUT /api/vehicles/:id", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
+      id: 1,
       make: "Honda",
       model: "Civic",
       category: "Sedan",

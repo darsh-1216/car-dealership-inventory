@@ -9,17 +9,19 @@ const requiredFieldMessages = {
 };
 
 const validateVehicleInput = (req, res) => {
-  const { make, model, category, price, quantity } = req.body;
-
   const fields = ["make", "model", "category", "price", "quantity"];
 
   for (const field of fields) {
     if (field === "price" || field === "quantity") {
       if (req.body[field] === undefined || req.body[field] === null) {
-        return res.status(400).json({ message: requiredFieldMessages[field] });
+        return res.status(400).json({
+          message: requiredFieldMessages[field],
+        });
       }
     } else if (!req.body[field]) {
-      return res.status(400).json({ message: requiredFieldMessages[field] });
+      return res.status(400).json({
+        message: requiredFieldMessages[field],
+      });
     }
   }
 
@@ -35,9 +37,20 @@ exports.createVehicle = (req, res) => {
 
   const { make, model, category, price, quantity } = req.body;
 
-  vehicles.push({ make, model, category, price, quantity });
+  const id = vehicles.length + 1;
 
-  return res.status(201).json({ message: "Vehicle created successfully" });
+  vehicles.push({
+    id,
+    make,
+    model,
+    category,
+    price,
+    quantity,
+  });
+
+  return res.status(201).json({
+    message: "Vehicle created successfully",
+  });
 };
 
 exports.getVehicles = (req, res) => {
@@ -55,4 +68,34 @@ exports.searchVehicles = (req, res) => {
   });
 
   return res.status(200).json(filteredVehicles);
+};
+
+exports.updateVehicle = (req, res) => {
+  const validationError = validateVehicleInput(req, res);
+
+  if (validationError) {
+    return validationError;
+  }
+
+  const { id } = req.params;
+
+  const vehicle = vehicles.find(
+    (vehicle) => vehicle.id === Number(id)
+  );
+
+  if (!vehicle) {
+    return res.status(404).json({
+      message: "Vehicle not found",
+    });
+  }
+
+  const { make, model, category, price, quantity } = req.body;
+
+  vehicle.make = make;
+  vehicle.model = model;
+  vehicle.category = category;
+  vehicle.price = price;
+  vehicle.quantity = quantity;
+
+  return res.status(200).json(vehicle);
 };
