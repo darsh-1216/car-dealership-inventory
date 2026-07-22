@@ -345,3 +345,41 @@ Requirements:
 - Login validation and error handling continue to work as before.
 - All tests passed successfully.
 - GREEN phase completed.
+
+---
+
+## Session 17 - Authentication Module Refactoring
+
+### User Prompt
+
+The authentication feature is now complete, and all the existing integration tests are passing successfully.
+
+At this point, the `app.js` file has started becoming too large because it contains both the route definitions and all the authentication logic. Before moving on to MongoDB integration in the next TDD cycle, I want to improve the project structure without changing the application's behavior.
+
+Please refactor the existing authentication module by separating the authentication routes and controller logic.
+
+Requirements:
+- Move the registration and login logic into a dedicated authentication controller.
+- Move the authentication routes into a dedicated routes file.
+- Update `app.js` so it only creates the Express application, applies middleware, mounts the authentication routes, keeps the existing health check endpoint, and exports the app.
+- Preserve all existing functionality, validation logic, JWT generation, response messages, and status codes.
+- Continue using the existing in-memory users array.
+- Do not modify any existing tests.
+- Do not introduce MongoDB, Mongoose, services, middleware, models, environment variables, utility files, or any additional project structure.
+- This is a pure refactoring task, so all existing tests should continue passing without modification.
+
+### AI Assistance
+
+- Extracted the authentication routes into a dedicated routing module.
+- Moved the registration and login logic into a dedicated authentication controller.
+- Updated `app.js` to mount the authentication routes while preserving the existing application behavior.
+- Ensured that all existing validations, JWT generation, response messages, and status codes remained unchanged.
+- Verified that the refactoring did not affect any existing integration tests.
+
+### Outcome
+
+- Authentication responsibilities are now separated into routes and controllers.
+- The project structure is cleaner and easier to extend.
+- Application behavior remains unchanged.
+- All existing integration tests passed successfully.
+- Refactoring completed.
