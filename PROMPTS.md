@@ -280,3 +280,68 @@ Keep the existing registration logic unchanged.
 - Existing registration behavior remains unchanged.
 - All tests passed successfully.
 - GREEN phase completed.
+
+---
+
+## Session 15 - JWT Response (RED)
+
+### User Prompt
+Create a new integration test to verify JWT generation after a successful login.
+
+Do not modify any existing authentication tests.
+
+Requirements:
+- Create a separate integration test file for JWT authentication.
+- Register a user before attempting login.
+- Verify that a successful login returns HTTP 200.
+- Verify that the response contains the existing success message.
+- Verify that the response includes a `token` property.
+- Verify that the token is a non-empty string.
+- Do not implement JWT generation yet.
+- The goal is only to introduce a failing integration test.
+
+### AI Assistance
+- Created a separate JWT integration test file.
+- Added a failing test to verify JWT generation after successful login.
+- Kept all existing authentication tests unchanged.
+- Confirmed that the new test failed because JWT generation was not yet implemented.
+
+### Outcome
+- JWT integration test added successfully.
+- Existing authentication tests remained unchanged.
+- The new JWT test failed as expected.
+- RED phase completed.
+
+---
+
+## Session 16 - JWT Generation on Successful Login (GREEN)
+
+### User Prompt
+The JWT login integration test is currently failing.
+
+Please implement the minimum changes required so that all tests pass.
+
+Requirements:
+- Use the `jsonwebtoken` package.
+- Generate a JWT after successful authentication.
+- Include the authenticated user's email in the token payload.
+- Set the token expiration to 1 hour.
+- Return the generated token along with the existing success response.
+- Preserve the existing registration, login, and validation behavior.
+- Do not introduce MongoDB, bcrypt, controllers, services, routes, middleware, or environment variables.
+- Make only the minimum changes required for the JWT integration test to pass.
+
+### AI Assistance
+- Added JWT generation using the `jsonwebtoken` package.
+- Generated a token containing the authenticated user's email.
+- Configured the token to expire after one hour.
+- Returned the JWT token along with the existing success response.
+- Preserved the existing authentication and validation flow.
+- Updated the existing login success test to reflect the new API response contract while keeping JWT-specific assertions in a dedicated test file.
+
+### Outcome
+- Successful login now returns a valid JWT token.
+- Existing authentication logic remains unchanged.
+- Login validation and error handling continue to work as before.
+- All tests passed successfully.
+- GREEN phase completed.
