@@ -383,3 +383,74 @@ Requirements:
 - Application behavior remains unchanged.
 - All existing integration tests passed successfully.
 - Refactoring completed.
+
+---
+
+## Session 18 - JWT Verification Middleware (RED Phase)
+
+### User Prompt
+
+The authentication module has been successfully refactored, and all existing integration tests are passing successfully.
+
+Now I want to begin the next feature by following the RED phase of Test-Driven Development (TDD).
+
+Requirements:
+- Create a new integration test file for JWT verification middleware.
+- Add tests for:
+  - Returning 401 when no Authorization header is provided.
+  - Returning 401 when an invalid JWT is provided.
+  - Returning 200 when a valid JWT is provided.
+- Obtain the valid JWT by registering a user and logging in during the test.
+- Do not implement the middleware or protected route yet.
+- Do not modify any existing tests.
+- The new tests should fail initially.
+
+### AI Assistance
+
+- Created a dedicated integration test file for JWT verification middleware.
+- Added integration tests for missing Authorization header, invalid JWT, and valid JWT authentication.
+- Used the existing registration and login flow to obtain a valid JWT during testing.
+- Ensured no application code was modified during the RED phase.
+
+### Outcome
+
+- JWT verification integration tests were successfully created.
+- The tests failed as expected because the middleware and protected route were not yet implemented.
+- RED phase completed successfully.
+
+---
+
+## Session 19 - JWT Verification Middleware (GREEN Phase)
+
+### User Prompt
+
+The JWT verification integration tests have been created and are currently failing as expected.
+
+Now complete the GREEN phase of Test-Driven Development (TDD).
+
+Requirements:
+- Implement a dedicated JWT authentication middleware.
+- Validate the Authorization header using the Bearer token format.
+- Verify the JWT using the existing secret.
+- Return 401 with the existing response message when authentication fails.
+- Create a protected route that is accessible only with a valid JWT.
+- Mount the protected route in the application.
+- Preserve all existing authentication functionality, validation logic, JWT generation, response messages, and status codes.
+- Do not modify any existing tests.
+- Ensure all integration tests pass successfully.
+
+### AI Assistance
+
+- Implemented a dedicated JWT authentication middleware.
+- Added a protected route secured by the middleware.
+- Updated the application routing to expose the protected endpoint.
+- Preserved the existing authentication flow, validations, JWT generation, response messages, and status codes.
+- Verified that all existing and newly added integration tests passed successfully.
+
+### Outcome
+
+- JWT verification middleware successfully protects authenticated routes.
+- Protected endpoints now require a valid Bearer token.
+- Existing authentication functionality remained unchanged.
+- All integration tests passed successfully.
+- GREEN phase completed successfully.
