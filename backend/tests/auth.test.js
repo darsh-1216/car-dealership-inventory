@@ -70,4 +70,21 @@ describe("POST /api/auth/login", () => {
       message: "Invalid email or password",
     });
   });
+
+  it("should reject login with an incorrect password", async () => {
+    await request(app).post("/api/auth/register").send({
+      email: "darshan@gmail.com",
+      password: "Password123",
+    });
+
+    const response = await request(app).post("/api/auth/login").send({
+      email: "darshan@gmail.com",
+      password: "WrongPassword",
+    });
+
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({
+      message: "Invalid email or password",
+    });
+  });
 });
