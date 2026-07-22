@@ -173,3 +173,22 @@ Reuse the existing in-memory user storage and make only the minimum changes requ
 - Login rejects unregistered email.
 - All tests passed.
 - GREEN phase completed.
+
+---
+
+## Session 10 - Login with Incorrect Password
+
+### User Prompt
+Can you add an integration test for a login attempt with a registered email but an incorrect password?
+
+For now, only add the integration test.
+
+### AI Assistance
+- Added an integration test for login with an incorrect password.
+- Verified the existing login implementation already handled this scenario.
+- Confirmed the API returns a generic authentication error for invalid credentials.
+
+### Outcome
+- Login returns **401 Unauthorized** for incorrect passwords.
+- All tests passed successfully.
+- No changes to the login implementation were required because the existing feature already satisfied this behavior.
