@@ -99,3 +99,22 @@ exports.updateVehicle = (req, res) => {
 
   return res.status(200).json(vehicle);
 };
+
+exports.deleteVehicle = (req, res) => {
+  const { id } = req.params;
+  const vehicleIndex = vehicles.findIndex(
+    (vehicle) => vehicle.id === Number(id)
+  );
+
+  if (vehicleIndex === -1) {
+    return res.status(404).json({
+      message: "Vehicle not found",
+    });
+  }
+
+  vehicles.splice(vehicleIndex, 1);
+
+  return res.status(200).json({
+    message: "Vehicle deleted successfully",
+  });
+};
