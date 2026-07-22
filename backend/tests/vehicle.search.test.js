@@ -146,4 +146,51 @@ describe("GET /api/vehicles/search", () => {
       },
     ]);
   });
+
+  it("returns 200 and an empty array when no vehicles match the model query parameter", async () => {
+    const token = await registerAndLogin();
+
+    const response = await request(app)
+      .get("/api/vehicles/search")
+      .query({ model: "Camry" })
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([]);
+  });
+
+  it("returns only vehicles matching the model query parameter", async () => {
+    const token = await registerAndLogin();
+
+    await request(app)
+      .post("/api/vehicles")
+      .set("Authorization", `Bearer ${token}`)
+      .send(vehicle);
+
+    await request(app)
+      .post("/api/vehicles")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        ...vehicle,
+        make: "Honda",
+        model: "Civic",
+      });
+
+    const response = await request(app)
+      .get("/api/vehicles/search")
+      .query({ model: "Fortuner" })
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([
+      {
+        id: 1,
+        make: "Toyota",
+        model: "Fortuner",
+        category: "SUV",
+        price: 4500000,
+        quantity: 5,
+      },
+    ]);
+  });
 });
