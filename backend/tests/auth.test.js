@@ -40,6 +40,28 @@ describe("POST /api/auth/register", () => {
       message: "Email already exists",
     });
   });
+
+  it("should reject registration without an email", async () => {
+    const response = await request(app).post("/api/auth/register").send({
+      password: "Password123",
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: "Email and password are required",
+    });
+  });
+
+  it("should reject registration without a password", async () => {
+    const response = await request(app).post("/api/auth/register").send({
+      email: "missing-password@gmail.com",
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: "Email and password are required",
+    });
+  });
 });
 
 describe("POST /api/auth/login", () => {
