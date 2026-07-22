@@ -54,7 +54,28 @@ exports.createVehicle = (req, res) => {
 };
 
 exports.getVehicles = (req, res) => {
-  return res.status(200).json(vehicles);
+  const { page, limit } = req.query;
+
+  if (page === undefined && limit === undefined) {
+    return res.status(200).json(vehicles);
+  }
+
+  const parsedPage = Number(page) || 1;
+  const parsedLimit = Number(limit) || vehicles.length;
+
+  const total = vehicles.length;
+  const totalPages = Math.max(Math.ceil(total / parsedLimit), 1);
+  const startIndex = (parsedPage - 1) * parsedLimit;
+  const endIndex = startIndex + parsedLimit;
+  const data = vehicles.slice(startIndex, endIndex);
+
+  return res.status(200).json({
+    page: parsedPage,
+    limit: parsedLimit,
+    total,
+    totalPages,
+    data,
+  });
 };
 
 exports.searchVehicles = (req, res) => {
