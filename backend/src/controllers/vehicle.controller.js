@@ -1,4 +1,4 @@
-const vehicles = [];
+const vehicles = require("../data/vehicles");
 
 exports.createVehicle = (req, res) => {
   const { make, model, category, price, quantity } = req.body;
