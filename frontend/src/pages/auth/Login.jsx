@@ -25,12 +25,12 @@ function Login() {
     <AuthLayout
       title="Welcome back"
       subtitle="Sign in to manage your vehicle inventory."
-      footer={<Link className="font-semibold text-blue-600 hover:text-blue-700" to="/register">Create an account</Link>}
+      footer={<Link className="font-semibold text-emerald-900 hover:text-emerald-700 underline underline-offset-4" to="/register">Create an account</Link>}
     >
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
         <AuthInput label="Email" type="email" autoComplete="email" error={errors.email?.message} {...register("email", { required: "Email is required" })} />
         <AuthInput label="Password" type="password" autoComplete="current-password" error={errors.password?.message} {...register("password", { required: "Password is required" })} />
-        <button className="w-full rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300" disabled={isSubmitting} type="submit">
+        <button className="w-full rounded-xl bg-emerald-900 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-emerald-800 active:scale-98 disabled:cursor-not-allowed disabled:bg-slate-300 shadow-md shadow-emerald-900/20" disabled={isSubmitting} type="submit">
           {isSubmitting ? "Signing in..." : "Sign in"}
         </button>
       </form>

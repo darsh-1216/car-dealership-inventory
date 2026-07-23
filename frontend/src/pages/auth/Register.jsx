@@ -34,7 +34,7 @@ function Register() {
       title="Create account"
       subtitle="Set up access to your vehicle inventory."
       footer={
-        <Link className="font-semibold text-blue-600 hover:text-blue-700" to="/login">
+        <Link className="font-semibold text-emerald-900 hover:text-emerald-700 underline underline-offset-4" to="/login">
           Back to login
         </Link>
       }
@@ -49,9 +49,9 @@ function Register() {
         />
 
         <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1">Role</label>
+          <label className="block text-xs font-bold text-slate-700 mb-1.5">Role</label>
           <select
-            className="w-full h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            className="w-full h-10 rounded-xl border border-slate-200 bg-white px-3.5 text-xs font-medium text-slate-900 outline-none transition-all duration-200 focus:border-emerald-800 focus:ring-4 focus:ring-emerald-800/10"
             {...register("role")}
           >
             <option value="customer">Customer</option>
@@ -79,7 +79,7 @@ function Register() {
         />
 
         <button
-          className="w-full rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
+          className="w-full rounded-xl bg-emerald-900 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-emerald-800 active:scale-98 disabled:cursor-not-allowed disabled:bg-slate-300 shadow-md shadow-emerald-900/20"
           disabled={isSubmitting}
           type="submit"
         >

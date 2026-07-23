@@ -76,16 +76,16 @@ function Vehicles() {
     <section className="space-y-6">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900">Vehicle Inventory</h1>
-          <p className="text-sm text-slate-500">Browse, search, and manage current dealership inventory.</p>
+          <h1 className="text-xl font-extrabold tracking-tight text-slate-900">Vehicle Inventory</h1>
+          <p className="mt-0.5 text-xs text-slate-500 font-medium">Browse, search, and manage dealership inventory.</p>
         </div>
         {isAdmin && (
           <Link
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-200 hover:bg-blue-700 transition"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-900 px-3.5 py-2 text-xs font-bold text-white shadow-md shadow-emerald-900/20 hover:bg-emerald-800 transition active:scale-98"
             to="/vehicles/add"
           >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24">
-              <path d="M12 4.5v15m7.5-7.5h-15" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+              <path d="M12 4.5v15m7.5-7.5h-15" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             Add Vehicle
           </Link>
@@ -103,8 +103,8 @@ function Vehicles() {
       />
 
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-slate-500">
-          Showing <span className="font-semibold text-slate-800">{filteredVehicles.length}</span> vehicle
+        <p className="text-xs font-medium text-slate-500">
+          Showing <span className="font-bold text-slate-800">{filteredVehicles.length}</span> vehicle
           {filteredVehicles.length === 1 ? "" : "s"}
         </p>
       </div>

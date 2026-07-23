@@ -8,10 +8,10 @@ function FilterSelect({ label, options, value, onChange, disabled = false }) {
   };
 
   return (
-    <label className="flex flex-col gap-1 text-xs font-semibold text-slate-600">
+    <label className="flex flex-col gap-1.5 text-xs font-bold text-slate-700">
       {label}
       <select
-        className="h-10 rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+        className="h-9.5 rounded-lg border border-slate-200 bg-white px-3 text-xs font-medium text-slate-800 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 disabled:cursor-not-allowed disabled:bg-slate-100"
         disabled={disabled}
         onChange={onChange}
         value={value}

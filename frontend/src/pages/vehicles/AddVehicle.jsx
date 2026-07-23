@@ -52,33 +52,36 @@ function AddVehicle() {
     }
   };
 
+  const inputClass =
+    "w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition-all duration-200 focus:border-emerald-800 focus:ring-4 focus:ring-emerald-800/10 placeholder:text-slate-400";
+
   return (
     <div className="mx-auto max-w-2xl">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Add New Vehicle</h1>
-          <p className="text-sm text-slate-500">Enter vehicle specifications to add it to the inventory.</p>
+          <h1 className="text-xl font-extrabold tracking-tight text-slate-900">Add New Vehicle</h1>
+          <p className="mt-0.5 text-xs font-medium text-slate-500">Enter vehicle specifications to add it to inventory.</p>
         </div>
         <Link
-          className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50"
+          className="rounded-xl border border-slate-200/80 bg-white px-4 py-2 text-xs font-bold text-slate-700 shadow-2xs hover:bg-slate-50 transition active:scale-95"
           to="/vehicles"
         >
           Cancel
         </Link>
       </div>
 
-      <form className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm" onSubmit={handleSubmit}>
+      <form className="space-y-6 rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs" onSubmit={handleSubmit}>
         {error && (
-          <div className="rounded-xl bg-red-50 p-4 text-sm font-medium text-red-600 border border-red-100">
+          <div className="rounded-2xl bg-red-50 p-4 text-xs font-bold text-red-600 border border-red-100">
             {error}
           </div>
         )}
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Make *</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Make *</label>
             <input
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className={inputClass}
               name="make"
               onChange={handleChange}
               placeholder="e.g. Toyota"
@@ -89,9 +92,9 @@ function AddVehicle() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Model *</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Model *</label>
             <input
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className={inputClass}
               name="model"
               onChange={handleChange}
               placeholder="e.g. Fortuner"
@@ -102,9 +105,9 @@ function AddVehicle() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Year</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Year</label>
             <input
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className={inputClass}
               max={2030}
               min={1990}
               name="year"
@@ -115,13 +118,8 @@ function AddVehicle() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Category *</label>
-            <select
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              name="category"
-              onChange={handleChange}
-              value={formData.category}
-            >
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Category *</label>
+            <select className={inputClass} name="category" onChange={handleChange} value={formData.category}>
               <option value="SUV">SUV</option>
               <option value="Sedan">Sedan</option>
               <option value="Hatchback">Hatchback</option>
@@ -131,9 +129,9 @@ function AddVehicle() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Price (₹) *</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Price (₹) *</label>
             <input
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className={inputClass}
               min={0}
               name="price"
               onChange={handleChange}
@@ -145,9 +143,9 @@ function AddVehicle() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Quantity (Stock) *</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Quantity (Stock) *</label>
             <input
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className={inputClass}
               min={0}
               name="quantity"
               onChange={handleChange}
@@ -158,9 +156,9 @@ function AddVehicle() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Mileage (km)</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Mileage (km)</label>
             <input
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className={inputClass}
               min={0}
               name="mileage"
               onChange={handleChange}
@@ -170,13 +168,8 @@ function AddVehicle() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Fuel Type</label>
-            <select
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              name="fuelType"
-              onChange={handleChange}
-              value={formData.fuelType}
-            >
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Fuel Type</label>
+            <select className={inputClass} name="fuelType" onChange={handleChange} value={formData.fuelType}>
               <option value="Petrol">Petrol</option>
               <option value="Diesel">Diesel</option>
               <option value="Electric">Electric</option>
@@ -186,41 +179,31 @@ function AddVehicle() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Transmission</label>
-            <select
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              name="transmission"
-              onChange={handleChange}
-              value={formData.transmission}
-            >
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Transmission</label>
+            <select className={inputClass} name="transmission" onChange={handleChange} value={formData.transmission}>
               <option value="Automatic">Automatic</option>
               <option value="Manual">Manual</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Status</label>
-            <select
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              name="status"
-              onChange={handleChange}
-              value={formData.status}
-            >
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">Status</label>
+            <select className={inputClass} name="status" onChange={handleChange} value={formData.status}>
               <option value="Available">Available</option>
               <option value="Sold">Sold</option>
             </select>
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+        <div className="flex justify-end gap-3 pt-5 border-t border-slate-100">
           <Link
-            className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            className="rounded-xl border border-slate-200 px-5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50 transition active:scale-95"
             to="/vehicles"
           >
             Cancel
           </Link>
           <button
-            className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-200 hover:bg-blue-700 disabled:opacity-50"
+            className="rounded-xl bg-emerald-900 px-6 py-2.5 text-xs font-bold text-white shadow-md shadow-emerald-900/20 hover:bg-emerald-800 transition active:scale-95 disabled:opacity-50"
             disabled={submitting}
             type="submit"
           >
