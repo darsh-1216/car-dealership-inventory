@@ -25,8 +25,13 @@ exports.registerUser = (req, res) => {
     });
   }
 
+  const user = {
+    ...req.body,
+    role: req.body.role || "customer",
+  };
+
   // Store the new user in memory.
-  users.push(req.body);
+  users.push(user);
 
   return res.status(201).json({
     message: "User registered successfully",
@@ -57,7 +62,7 @@ exports.loginUser = (req, res) => {
 
   // Generate a JWT for the authenticated user.
   const token = jwt.sign(
-    { email: user.email },
+    { id: user.id, email: user.email, role: user.role },
     JWT_SECRET,
     {
       expiresIn: "1h",

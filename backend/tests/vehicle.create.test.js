@@ -31,8 +31,8 @@ describe("POST /api/vehicles", () => {
     });
   });
 
-  it("returns 201 when a valid authenticated user creates a vehicle", async () => {
-    const token = await registerAndLogin();
+  it("returns 201 when a valid authenticated admin creates a vehicle", async () => {
+    const token = await registerAndLogin("admin");
 
     const response = await request(app)
       .post("/api/vehicles")
@@ -46,7 +46,7 @@ describe("POST /api/vehicles", () => {
   });
 
   it("returns 400 when make is missing", async () => {
-    const token = await registerAndLogin();
+    const token = await registerAndLogin("admin");
 
     const { make, ...vehicleWithoutMake } = vehicle;
 
@@ -62,7 +62,7 @@ describe("POST /api/vehicles", () => {
   });
 
   it("returns 400 when model is missing", async () => {
-    const token = await registerAndLogin();
+    const token = await registerAndLogin("admin");
 
     const { model, ...vehicleWithoutModel } = vehicle;
 
@@ -78,7 +78,7 @@ describe("POST /api/vehicles", () => {
   });
 
   it("returns 400 when category is missing", async () => {
-    const token = await registerAndLogin();
+    const token = await registerAndLogin("admin");
 
     const { category, ...vehicleWithoutCategory } = vehicle;
 
@@ -94,7 +94,7 @@ describe("POST /api/vehicles", () => {
   });
 
   it("returns 400 when price is missing", async () => {
-    const token = await registerAndLogin();
+    const token = await registerAndLogin("admin");
 
     const { price, ...vehicleWithoutPrice } = vehicle;
 
@@ -110,7 +110,7 @@ describe("POST /api/vehicles", () => {
   });
 
   it("returns 400 when quantity is missing", async () => {
-    const token = await registerAndLogin();
+    const token = await registerAndLogin("admin");
 
     const { quantity, ...vehicleWithoutQuantity } = vehicle;
 

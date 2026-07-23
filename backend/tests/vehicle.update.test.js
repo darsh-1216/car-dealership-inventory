@@ -42,7 +42,7 @@ describe("PUT /api/vehicles/:id", () => {
   });
 
   it("returns 404 when the vehicle does not exist", async () => {
-    const token = await registerAndLogin();
+    const token = await registerAndLogin("admin");
 
     const response = await request(app)
       .put("/api/vehicles/999")
@@ -56,11 +56,13 @@ describe("PUT /api/vehicles/:id", () => {
       });
 
     expect(response.status).toBe(404);
-    expect(response.body).toEqual({ message: "Vehicle not found" });
+    expect(response.body).toEqual({
+      message: "Vehicle not found",
+    });
   });
 
-  it("returns 200 and the updated vehicle when an authenticated user updates an existing vehicle", async () => {
-    const token = await registerAndLogin();
+  it("returns 200 and the updated vehicle when an admin updates an existing vehicle", async () => {
+    const token = await registerAndLogin("admin");
 
     const createResponse = await request(app)
       .post("/api/vehicles")

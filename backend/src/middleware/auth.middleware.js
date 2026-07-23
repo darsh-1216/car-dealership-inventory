@@ -20,7 +20,11 @@ const authMiddleware = (req, res, next) => {
   }
 
   try {
-    jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = {
+      id: decoded.id,
+      role: decoded.role,
+    };
     return next();
   } catch (error) {
     return res.status(401).json({
@@ -29,4 +33,17 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
+const authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({
+        message: "Forbidden",
+      });
+    }
+
+    return next();
+  };
+};
+
 module.exports = authMiddleware;
+module.exports.authorizeRoles = authorizeRoles;

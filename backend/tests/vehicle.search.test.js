@@ -29,28 +29,29 @@ describe("GET /api/vehicles/search", () => {
   });
 
   it("returns 200 and an empty array when no vehicles match", async () => {
-    const token = await registerAndLogin();
+    const customerToken = await registerAndLogin();
 
     const response = await request(app)
       .get("/api/vehicles/search")
       .query({ make: "Honda" })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([]);
   });
 
   it("returns only vehicles matching the make query parameter", async () => {
-    const token = await registerAndLogin();
+    const adminToken = await registerAndLogin("admin");
+    const customerToken = await registerAndLogin();
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send(vehicle);
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send({
         ...vehicle,
         make: "Honda",
@@ -60,7 +61,7 @@ describe("GET /api/vehicles/search", () => {
     const response = await request(app)
       .get("/api/vehicles/search")
       .query({ make: "Toyota" })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
@@ -76,16 +77,17 @@ describe("GET /api/vehicles/search", () => {
   });
 
   it("returns only vehicles matching the category query parameter", async () => {
-    const token = await registerAndLogin();
+    const adminToken = await registerAndLogin("admin");
+    const customerToken = await registerAndLogin();
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send(vehicle);
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send({
         ...vehicle,
         make: "Honda",
@@ -96,7 +98,7 @@ describe("GET /api/vehicles/search", () => {
     const response = await request(app)
       .get("/api/vehicles/search")
       .query({ category: "SUV" })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
@@ -112,16 +114,17 @@ describe("GET /api/vehicles/search", () => {
   });
 
   it("returns only vehicles matching both make and category query parameters", async () => {
-    const token = await registerAndLogin();
+    const adminToken = await registerAndLogin("admin");
+    const customerToken = await registerAndLogin();
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send(vehicle);
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send({
         ...vehicle,
         make: "Honda",
@@ -132,7 +135,7 @@ describe("GET /api/vehicles/search", () => {
     const response = await request(app)
       .get("/api/vehicles/search")
       .query({ make: "Toyota", category: "SUV" })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
@@ -148,28 +151,29 @@ describe("GET /api/vehicles/search", () => {
   });
 
   it("returns 200 and an empty array when no vehicles match the model query parameter", async () => {
-    const token = await registerAndLogin();
+    const customerToken = await registerAndLogin();
 
     const response = await request(app)
       .get("/api/vehicles/search")
       .query({ model: "Camry" })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([]);
   });
 
   it("returns only vehicles matching the model query parameter", async () => {
-    const token = await registerAndLogin();
+    const adminToken = await registerAndLogin("admin");
+    const customerToken = await registerAndLogin();
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send(vehicle);
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send({
         ...vehicle,
         make: "Honda",
@@ -179,7 +183,7 @@ describe("GET /api/vehicles/search", () => {
     const response = await request(app)
       .get("/api/vehicles/search")
       .query({ model: "Fortuner" })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
@@ -194,3 +198,4 @@ describe("GET /api/vehicles/search", () => {
     ]);
   });
 });
+

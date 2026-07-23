@@ -29,27 +29,28 @@ describe("GET /api/vehicles", () => {
   });
 
   it("returns 200 and an empty array when no vehicles exist", async () => {
-    const token = await registerAndLogin();
+    const customerToken = await registerAndLogin();
 
     const response = await request(app)
       .get("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([]);
   });
 
   it("returns 200 and all created vehicles for an authenticated user", async () => {
-    const token = await registerAndLogin();
+    const adminToken = await registerAndLogin("admin");
+    const customerToken = await registerAndLogin();
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send(vehicle);
 
     const response = await request(app)
       .get("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
@@ -65,16 +66,17 @@ describe("GET /api/vehicles", () => {
   });
 
   it("returns the first page of vehicles when page and limit are provided", async () => {
-    const token = await registerAndLogin();
+    const adminToken = await registerAndLogin("admin");
+    const customerToken = await registerAndLogin();
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send(vehicle);
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send({
         ...vehicle,
         make: "Honda",
@@ -84,7 +86,7 @@ describe("GET /api/vehicles", () => {
     const response = await request(app)
       .get("/api/vehicles")
       .query({ page: 1, limit: 1 })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
@@ -106,16 +108,17 @@ describe("GET /api/vehicles", () => {
   });
 
   it("returns the correct subset of vehicles for subsequent pages", async () => {
-    const token = await registerAndLogin();
+    const adminToken = await registerAndLogin("admin");
+    const customerToken = await registerAndLogin();
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send(vehicle);
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send({
         ...vehicle,
         make: "Honda",
@@ -125,7 +128,7 @@ describe("GET /api/vehicles", () => {
     const response = await request(app)
       .get("/api/vehicles")
       .query({ page: 2, limit: 1 })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
@@ -145,19 +148,20 @@ describe("GET /api/vehicles", () => {
       ],
     });
   });
-
+  
   it("returns an empty data array when the requested page exceeds the available pages", async () => {
-    const token = await registerAndLogin();
+    const adminToken = await registerAndLogin("admin");
+    const customerToken = await registerAndLogin();
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send(vehicle);
 
     const response = await request(app)
       .get("/api/vehicles")
       .query({ page: 2, limit: 1 })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({

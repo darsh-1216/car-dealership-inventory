@@ -29,18 +29,20 @@ describe("DELETE /api/vehicles/:id", () => {
   });
 
   it("returns 404 when the vehicle does not exist", async () => {
-    const token = await registerAndLogin();
+    const token = await registerAndLogin("admin");
 
     const response = await request(app)
       .delete("/api/vehicles/999")
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(404);
-    expect(response.body).toEqual({ message: "Vehicle not found" });
+    expect(response.body).toEqual({
+      message: "Vehicle not found",
+    });
   });
 
-  it("returns 200 when an authenticated user successfully deletes an existing vehicle", async () => {
-    const token = await registerAndLogin();
+  it("returns 200 when an admin successfully deletes an existing vehicle", async () => {
+    const token = await registerAndLogin("admin");
 
     await request(app)
       .post("/api/vehicles")
@@ -52,11 +54,13 @@ describe("DELETE /api/vehicles/:id", () => {
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: "Vehicle deleted successfully" });
+    expect(response.body).toEqual({
+      message: "Vehicle deleted successfully",
+    });
   });
 
   it("removes the deleted vehicle from the in-memory data store", async () => {
-    const token = await registerAndLogin();
+    const token = await registerAndLogin("admin");
 
     await request(app)
       .post("/api/vehicles")

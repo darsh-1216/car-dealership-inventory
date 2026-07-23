@@ -1,15 +1,30 @@
 const request = require("supertest");
 const app = require("../src/app");
 const vehicles = require("../src/data/vehicles");
-const { vehicle, registerAndLogin } = require("./helpers/vehicleTestUtils");
 
-describe("GET /api/vehicles/:id", () => {
+const registerAndLogin = async (email, role = "customer") => {
+  await request(app).post("/api/auth/register").send({
+    name: "Test User",
+    email,
+    password: "Password123",
+    role,
+  });
+
+  const loginResponse = await request(app).post("/api/auth/login").send({
+    email,
+    password: "Password123",
+  });
+
+  return loginResponse.body.token;
+};
+
+describe("GET /api/vehicles/count", () => {
   beforeEach(() => {
     vehicles.length = 0;
   });
 
-  it("returns 401 when Authorization header is missing", async () => {
-    const response = await request(app).get("/api/vehicles/1");
+  it("returns 401 Unauthorized when the Authorization header is missing", async () => {
+    const response = await request(app).get("/api/vehicles/count");
 
     expect(response.status).toBe(401);
     expect(response.body).toEqual({
@@ -17,9 +32,9 @@ describe("GET /api/vehicles/:id", () => {
     });
   });
 
-  it("returns 401 when JWT is invalid", async () => {
+  it("returns 401 Unauthorized when the JWT is invalid", async () => {
     const response = await request(app)
-      .get("/api/vehicles/1")
+      .get("/api/vehicles/count")
       .set("Authorization", "Bearer invalid-token");
 
     expect(response.status).toBe(401);
@@ -28,37 +43,56 @@ describe("GET /api/vehicles/:id", () => {
     });
   });
 
-  it("returns 404 when the vehicle does not exist", async () => {
-    const token = await registerAndLogin();
+  it("returns the total number of vehicles for an authenticated request", async () => {
+    const adminToken = await registerAndLogin(
+      "vehicle-admin@gmail.com",
+      "admin"
+    );
 
-    const response = await request(app)
-      .get("/api/vehicles/999")
-      .set("Authorization", `Bearer ${token}`);
-
-    expect(response.status).toBe(404);
-    expect(response.body).toEqual({ message: "Vehicle not found" });
-  });
-
-  it("returns 200 when an authenticated user successfully retrieves an existing vehicle", async () => {
-    const token = await registerAndLogin();
+    const customerToken = await registerAndLogin(
+      "vehicle-customer@gmail.com"
+    );
 
     await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
-      .send(vehicle);
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        make: "Toyota",
+        model: "Corolla",
+        category: "Sedan",
+        price: 20000,
+        quantity: 2,
+      });
+
+    await request(app)
+      .post("/api/vehicles")
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        make: "Honda",
+        model: "Civic",
+        category: "Sedan",
+        price: 22000,
+        quantity: 1,
+      });
+
+    await request(app)
+      .post("/api/vehicles")
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        make: "Ford",
+        model: "Mustang",
+        category: "Coupe",
+        price: 30000,
+        quantity: 3,
+      });
 
     const response = await request(app)
-      .get("/api/vehicles/1")
-      .set("Authorization", `Bearer ${token}`);
+      .get("/api/vehicles/count")
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
-      id: 1,
-      make: "Toyota",
-      model: "Fortuner",
-      category: "SUV",
-      price: 4500000,
-      quantity: 5,
+      totalVehicles: 3,
     });
   });
 });

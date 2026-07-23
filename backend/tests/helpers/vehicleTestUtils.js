@@ -9,18 +9,19 @@ const vehicle = {
   quantity: 5,
 };
 
-function createUser() {
+function createUser(role = "customer") {
   const uniqueId = `${Date.now()}-${Math.random()}`;
 
   return {
     name: "Vehicle User",
     email: `vehicle-user-${uniqueId}@example.com`,
     password: "Password123",
+    role,
   };
 }
 
-async function registerAndLogin() {
-  const user = createUser();
+async function registerAndLogin(role = "customer") {
+  const user = createUser(role);
 
   await request(app).post("/api/auth/register").send(user);
 

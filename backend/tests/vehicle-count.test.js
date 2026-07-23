@@ -2,11 +2,16 @@ const request = require("supertest");
 const app = require("../src/app");
 const vehicles = require("../src/data/vehicles");
 
-const registerAndLogin = async (email) => {
+const registerAndLogin = async (role = "customer") => {
+  const unique = `${Date.now()}-${Math.random()}`;
+
+  const email = `vehicle-${role}-${unique}@gmail.com`;
+
   await request(app).post("/api/auth/register").send({
     name: "Test User",
     email,
     password: "Password123",
+    role,
   });
 
   const loginResponse = await request(app).post("/api/auth/login").send({
@@ -43,11 +48,12 @@ describe("GET /api/vehicles/count", () => {
   });
 
   it("returns the total number of vehicles for an authenticated request", async () => {
-    const token = await registerAndLogin("vehicle-count-user@gmail.com");
+    const adminToken = await registerAndLogin("admin");
+    const customerToken = await registerAndLogin();
 
-    await request(app)
+    const create1 = await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send({
         make: "Toyota",
         model: "Corolla",
@@ -56,9 +62,11 @@ describe("GET /api/vehicles/count", () => {
         quantity: 2,
       });
 
-    await request(app)
+    expect(create1.status).toBe(201);
+
+    const create2 = await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send({
         make: "Honda",
         model: "Civic",
@@ -67,9 +75,11 @@ describe("GET /api/vehicles/count", () => {
         quantity: 1,
       });
 
-    await request(app)
+    expect(create2.status).toBe(201);
+
+    const create3 = await request(app)
       .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${adminToken}`)
       .send({
         make: "Ford",
         model: "Mustang",
@@ -78,9 +88,11 @@ describe("GET /api/vehicles/count", () => {
         quantity: 3,
       });
 
+    expect(create3.status).toBe(201);
+
     const response = await request(app)
       .get("/api/vehicles/count")
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${customerToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
