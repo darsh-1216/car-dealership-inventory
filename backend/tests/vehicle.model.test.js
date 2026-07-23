@@ -22,6 +22,8 @@ describe("Vehicle model", () => {
     expect(schema.paths.fuelType).toBeDefined();
     expect(schema.paths.transmission).toBeDefined();
     expect(schema.paths.status).toBeDefined();
+    expect(schema.paths.category).toBeDefined();
+    expect(schema.paths.quantity).toBeDefined();
     expect(schema.paths.createdAt).toBeDefined();
   });
 
@@ -36,6 +38,8 @@ describe("Vehicle model", () => {
     expect(schema.paths.mileage.options.required).toBe(true);
     expect(schema.paths.fuelType.options.required).toBe(true);
     expect(schema.paths.transmission.options.required).toBe(true);
+    expect(schema.paths.category.options.required).toBe(true);
+    expect(schema.paths.quantity.options.required).toBe(true);
   });
 
   it("trims string fields", () => {
@@ -92,6 +96,13 @@ describe("Vehicle model", () => {
     const statusPath = Vehicle.schema.paths.status;
 
     expect(statusPath.options.default).toBe("Available");
+  });
+
+  it("defaults quantity to 0", () => {
+    const { Vehicle } = require("../src/models/Vehicle");
+    const quantityPath = Vehicle.schema.paths.quantity;
+
+    expect(quantityPath.options.default).toBe(0);
   });
 
   it("sets a default createdAt value", () => {
