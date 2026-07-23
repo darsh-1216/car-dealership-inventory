@@ -6,6 +6,15 @@ const {
   registerAndLogin,
 } = require("./helpers/vehicleTestUtils");
 
+const createPurchaseVehicle = (overrides = {}) => Vehicle.create({
+  ...vehicle,
+  year: 2024,
+  mileage: 0,
+  fuelType: "Petrol",
+  transmission: "Automatic",
+  ...overrides,
+});
+
 describe("POST /api/vehicles/:id/purchase", () => {
   beforeEach(async () => {
     await Vehicle.deleteMany({});
@@ -37,16 +46,8 @@ describe("POST /api/vehicles/:id/purchase", () => {
 
   it("returns 400 when the vehicle quantity is 0", async () => {
     const token = await registerAndLogin("customer");
-
-    const createResponse = await request(app)
-      .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
-      .send({
-        ...vehicle,
-        quantity: 0,
-      });
-
-    const vehicleId = createResponse.body._id;
+    const createdVehicle = await createPurchaseVehicle({ quantity: 0 });
+    const vehicleId = createdVehicle._id;
 
     const response = await request(app)
       .post(`/api/vehicles/${vehicleId}/purchase`)
@@ -61,12 +62,8 @@ describe("POST /api/vehicles/:id/purchase", () => {
   it("returns 200 and decreases the quantity by 1 when the purchase succeeds", async () => {
     const token = await registerAndLogin("customer");
 
-    const createResponse = await request(app)
-      .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
-      .send(vehicle);
-
-    const vehicleId = createResponse.body._id;
+    const createdVehicle = await createPurchaseVehicle();
+    const vehicleId = createdVehicle._id;
 
     const response = await request(app)
       .post(`/api/vehicles/${vehicleId}/purchase`)
@@ -79,12 +76,8 @@ describe("POST /api/vehicles/:id/purchase", () => {
   it("returns the updated vehicle in the purchase response", async () => {
     const token = await registerAndLogin("customer");
 
-    const createResponse = await request(app)
-      .post("/api/vehicles")
-      .set("Authorization", `Bearer ${token}`)
-      .send(vehicle);
-
-    const vehicleId = createResponse.body._id;
+    const createdVehicle = await createPurchaseVehicle();
+    const vehicleId = createdVehicle._id;
 
     const response = await request(app)
       .post(`/api/vehicles/${vehicleId}/purchase`)

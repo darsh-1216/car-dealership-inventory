@@ -5,6 +5,7 @@ const {
   updateVehicle: updateVehicleInRepository,
   deleteVehicle: deleteVehicleInRepository,
   countVehicles: countVehiclesInRepository,
+  purchaseVehicle: purchaseVehicleInRepository,
 } = require("../repositories/vehicleRepository");
 
 async function createVehicle(vehicleData) {
@@ -31,6 +32,10 @@ async function getVehicleCount() {
   return countVehiclesInRepository();
 }
 
+async function purchaseVehicle(id) {
+  return purchaseVehicleInRepository(id);
+}
+
 module.exports = {
   createVehicle,
   getVehicles,
@@ -38,4 +43,5 @@ module.exports = {
   updateVehicle,
   deleteVehicle,
   getVehicleCount,
+  purchaseVehicle,
 };

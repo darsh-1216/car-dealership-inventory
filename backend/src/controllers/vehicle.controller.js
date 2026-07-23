@@ -1,4 +1,13 @@
-const vehicles = require("../data/vehicles");
+const vehicleService = require("../services/vehicleService");
+
+const toLegacyVehicle = (vehicle) => ({
+  id: vehicle.id || Number.parseInt(String(vehicle._id).slice(-6), 16),
+  make: vehicle.make,
+  model: vehicle.model,
+  category: vehicle.category,
+  price: vehicle.price,
+  quantity: vehicle.quantity,
+});
 
 const requiredFieldMessages = {
   make: "Make is required",
@@ -28,134 +37,173 @@ const validateVehicleInput = (req, res) => {
   return null;
 };
 
-exports.createVehicle = (req, res) => {
+exports.createVehicle = async (req, res) => {
   const validationError = validateVehicleInput(req, res);
 
   if (validationError) {
     return validationError;
   }
 
-  const { make, model, category, price, quantity } = req.body;
-
-  const id = vehicles.length + 1;
-
-  vehicles.push({
-    id,
-    make,
-    model,
-    category,
-    price,
-    quantity,
-  });
-
-  return res.status(201).json({
-    message: "Vehicle created successfully",
-  });
-};
-
-exports.getVehicleCount = (req, res) => {
-  return res.status(200).json({
-    totalVehicles: vehicles.length,
-  });
-};
-
-exports.getVehicles = (req, res) => {
-  const { page, limit } = req.query;
-
-  if (page === undefined && limit === undefined) {
-    return res.status(200).json(vehicles);
+  try {
+    await vehicleService.createVehicle(req.body);
+    return res.status(201).json({ message: "Vehicle created successfully" });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
   }
-
-  const parsedPage = Number(page) || 1;
-  const parsedLimit = Number(limit) || vehicles.length;
-
-  const total = vehicles.length;
-  const totalPages = Math.max(Math.ceil(total / parsedLimit), 1);
-  const startIndex = (parsedPage - 1) * parsedLimit;
-  const endIndex = startIndex + parsedLimit;
-  const data = vehicles.slice(startIndex, endIndex);
-
-  return res.status(200).json({
-    page: parsedPage,
-    limit: parsedLimit,
-    total,
-    totalPages,
-    data,
-  });
 };
 
-exports.searchVehicles = (req, res) => {
-  const { make, model, category } = req.query;
+exports.getVehicleCount = async (req, res) => {
+  try {
+    const totalVehicles = await vehicleService.getVehicleCount();
 
-  const filteredVehicles = vehicles.filter((vehicle) => {
-    const matchesMake = !make || vehicle.make === make;
-    const matchesModel = !model || vehicle.model === model;
-    const matchesCategory = !category || vehicle.category === category;
-
-    return matchesMake && matchesModel && matchesCategory;
-  });
-
-  return res.status(200).json(filteredVehicles);
+    return res.status(200).json({
+      totalVehicles,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
-exports.updateVehicle = (req, res) => {
+exports.getVehicles = async (req, res) => {
+  try {
+    const vehicles = await vehicleService.getVehicles();
+
+    const { page, limit } = req.query;
+
+    if (page === undefined && limit === undefined) {
+      return res.status(200).json(vehicles.map(toLegacyVehicle));
+    }
+
+    const parsedPage = Number(page) || 1;
+    const parsedLimit = Number(limit) || vehicles.length;
+
+    const total = vehicles.length;
+    const totalPages = Math.max(Math.ceil(total / parsedLimit), 1);
+
+    const startIndex = (parsedPage - 1) * parsedLimit;
+    const endIndex = startIndex + parsedLimit;
+
+    return res.status(200).json({
+      page: parsedPage,
+      limit: parsedLimit,
+      total,
+      totalPages,
+      data: vehicles.slice(startIndex, endIndex).map(toLegacyVehicle),
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+exports.searchVehicles = async (req, res) => {
+  try {
+    const { make, model, category } = req.query;
+    const vehicles = await vehicleService.getVehicles();
+    const filteredVehicles = vehicles.filter((vehicle) =>
+      (!make || vehicle.make === make) &&
+      (!model || vehicle.model === model) &&
+      (!category || vehicle.category === category)
+    );
+
+    return res.status(200).json(filteredVehicles.map(toLegacyVehicle));
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+exports.getVehicleById = async (req, res) => {
+  try {
+    const vehicle = await vehicleService.getVehicle(req.params.id);
+
+    if (!vehicle) {
+      return res.status(404).json({
+        message: "Vehicle not found",
+      });
+    }
+
+    return res.status(200).json(toLegacyVehicle(vehicle));
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+exports.updateVehicle = async (req, res) => {
   const validationError = validateVehicleInput(req, res);
 
   if (validationError) {
     return validationError;
   }
 
-  const { id } = req.params;
+  try {
+    const vehicle = await vehicleService.updateVehicle(
+      req.params.id,
+      req.body
+    );
 
-  const vehicle = vehicles.find(
-    (vehicle) => vehicle.id === Number(id)
-  );
+    if (!vehicle) {
+      return res.status(404).json({
+        message: "Vehicle not found",
+      });
+    }
 
-  if (!vehicle) {
-    return res.status(404).json({
-      message: "Vehicle not found",
+    return res.status(200).json(toLegacyVehicle(vehicle));
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
     });
   }
-
-  const { make, model, category, price, quantity } = req.body;
-
-  vehicle.make = make;
-  vehicle.model = model;
-  vehicle.category = category;
-  vehicle.price = price;
-  vehicle.quantity = quantity;
-
-  return res.status(200).json(vehicle);
 };
 
-exports.getVehicleById = (req, res) => {
-  const { id } = req.params;
-  const vehicle = vehicles.find((vehicle) => vehicle.id === Number(id));
+exports.deleteVehicle = async (req, res) => {
+  try {
+    const vehicle = await vehicleService.deleteVehicle(req.params.id);
 
-  if (!vehicle) {
-    return res.status(404).json({
-      message: "Vehicle not found",
+    if (!vehicle) {
+      return res.status(404).json({
+        message: "Vehicle not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Vehicle deleted successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
     });
   }
-
-  return res.status(200).json(vehicle);
 };
 
-exports.deleteVehicle = (req, res) => {
-  const { id } = req.params;
-  const vehicleIndex = vehicles.findIndex(
-    (vehicle) => vehicle.id === Number(id)
-  );
+exports.purchaseVehicle = async (req, res) => {
+  try {
+    const vehicle = await vehicleService.purchaseVehicle(req.params.id);
 
-  if (vehicleIndex === -1) {
-    return res.status(404).json({
-      message: "Vehicle not found",
+    if (vehicle === null) {
+      return res.status(404).json({
+        message: "Vehicle not found",
+      });
+    }
+
+    if (vehicle === false) {
+      return res.status(400).json({
+        message: "Vehicle is out of stock",
+      });
+    }
+
+    return res.status(200).json(vehicle);
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
     });
   }
-
-  vehicles.splice(vehicleIndex, 1);
-
-  return res.status(200).json({
-    message: "Vehicle deleted successfully",
-  });
 };
