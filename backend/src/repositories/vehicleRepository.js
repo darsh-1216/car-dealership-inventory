@@ -66,6 +66,14 @@ async function purchaseVehicle(id) {
   return Vehicle.findByIdAndUpdate(id, updates, { new: true });
 }
 
+async function restockVehicle(id, updates) {
+  if (!isValidId(id)) {
+    return null;
+  }
+
+  return Vehicle.findByIdAndUpdate(id, updates, { new: true });
+}
+
 module.exports = {
   createVehicle,
   getAllVehicles,
@@ -74,4 +82,5 @@ module.exports = {
   deleteVehicle,
   countVehicles,
   purchaseVehicle,
+  restockVehicle,
 };

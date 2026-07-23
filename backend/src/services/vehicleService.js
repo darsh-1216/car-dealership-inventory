@@ -6,6 +6,7 @@ const {
   deleteVehicle: deleteVehicleInRepository,
   countVehicles: countVehiclesInRepository,
   purchaseVehicle: purchaseVehicleInRepository,
+  restockVehicle: restockVehicleInRepository,
 } = require("../repositories/vehicleRepository");
 
 async function createVehicle(vehicleData) {
@@ -36,6 +37,24 @@ async function purchaseVehicle(id) {
   return purchaseVehicleInRepository(id);
 }
 
+async function restockVehicle(id, quantity) {
+  const vehicle = await getVehicleByIdInRepository(id);
+
+  if (!vehicle) {
+    return null;
+  }
+
+  const updates = {
+    quantity: vehicle.quantity + quantity,
+  };
+
+  if (vehicle.status === "Sold" && updates.quantity > 0) {
+    updates.status = "Available";
+  }
+
+  return restockVehicleInRepository(id, updates);
+}
+
 module.exports = {
   createVehicle,
   getVehicles,
@@ -44,4 +63,5 @@ module.exports = {
   deleteVehicle,
   getVehicleCount,
   purchaseVehicle,
+  restockVehicle,
 };

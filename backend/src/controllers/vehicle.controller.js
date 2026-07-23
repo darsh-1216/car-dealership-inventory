@@ -207,3 +207,29 @@ exports.purchaseVehicle = async (req, res) => {
     });
   }
 };
+
+exports.restockVehicle = async (req, res) => {
+  const { quantity } = req.body;
+
+  if (typeof quantity !== "number" || quantity <= 0) {
+    return res.status(400).json({
+      message: "Restock quantity must be greater than 0",
+    });
+  }
+
+  try {
+    const vehicle = await vehicleService.restockVehicle(req.params.id, quantity);
+
+    if (!vehicle) {
+      return res.status(404).json({
+        message: "Vehicle not found",
+      });
+    }
+
+    return res.status(200).json(vehicle);
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};

@@ -11,6 +11,7 @@ const {
   updateVehicle,
   deleteVehicle,
   purchaseVehicle,
+  restockVehicle,
 } = require("../controllers/vehicle.controller");
 
 const router = express.Router();
@@ -38,5 +39,8 @@ router.delete("/:id", authMiddleware, authorizeRoles("admin"), deleteVehicle);
 
 // Purchase Vehicle
 router.post("/:id/purchase", authMiddleware, purchaseVehicle);
+
+// Restock Vehicle (Admin Only)
+router.post("/:id/restock", authMiddleware, authorizeRoles("admin"), restockVehicle);
 
 module.exports = router;
