@@ -973,3 +973,114 @@ Requirements:
 Successfully completed the GREEN phase for vehicle pagination. The vehicle listing endpoint now supports optional pagination while maintaining backward compatibility with the original behavior. All pagination tests and previously implemented API tests passed successfully.
 
 ---
+
+## Session 40 - Vehicle Inventory Count (RED)
+
+### User Prompt
+
+Implement a dedicated endpoint to return the total number of vehicles in the inventory using Test-Driven Development (TDD).
+
+Requirements:
+- Add a new authenticated endpoint to return the total number of vehicles.
+- Reuse the existing authentication middleware.
+- Return the total number of vehicles in the expected response format.
+- Return `401 Unauthorized` for missing or invalid JWT tokens.
+- Do not modify any existing functionality.
+- Keep the implementation minimal and consistent with the existing coding style.
+
+### AI Assistance
+
+- Wrote failing tests for the new inventory count endpoint.
+- Covered both authenticated and unauthenticated scenarios.
+- Verified the expected JSON response format before implementation.
+
+### Outcome
+
+Successfully completed the RED phase for the vehicle inventory count feature. The new tests failed as expected and were ready for implementation.
+
+---
+
+## Session 41 - Vehicle Inventory Count (GREEN)
+
+### User Prompt
+
+Implement the vehicle inventory count endpoint so that all previously written RED phase tests pass.
+
+Requirements:
+- Add an authenticated endpoint to return the total number of vehicles.
+- Reuse the existing authentication middleware.
+- Return the total vehicle count in the expected JSON format.
+- Preserve all existing functionality.
+- Keep the implementation minimal and consistent with the existing coding style.
+
+### AI Assistance
+
+- Implemented the vehicle inventory count controller.
+- Added the new authenticated route.
+- Returned the total number of vehicles using the in-memory data store.
+- Verified compatibility with existing authentication.
+
+### Outcome
+
+Successfully completed the GREEN phase for vehicle inventory count. The endpoint returned the correct inventory count and all related tests passed successfully.
+
+---
+
+## Session 42 - Role-Based Authorization (RED)
+
+### User Prompt
+
+Implement role-based authorization (RBAC) for the vehicle inventory API using Test-Driven Development (TDD).
+
+Requirements:
+- Add support for user roles during registration.
+- Default the role to `customer`.
+- Include the user's role in the JWT payload.
+- Create an authorization middleware that accepts one or more allowed roles.
+- Restrict vehicle creation, update, and deletion to administrators.
+- Allow authenticated users to continue viewing, searching, and counting vehicles.
+- Return `403 Forbidden` when authenticated users do not have sufficient permissions.
+- Keep the implementation minimal without breaking existing functionality.
+
+### AI Assistance
+
+- Added comprehensive RBAC tests before implementation.
+- Covered admin and customer authorization scenarios.
+- Verified protected and accessible endpoints independently.
+
+### Outcome
+
+Successfully completed the RED phase for RBAC. All authorization tests failed as expected and clearly defined the required behavior before implementation.
+
+---
+
+## Session 43 - Role-Based Authorization (GREEN)
+
+### User Prompt
+
+Implement role-based authorization so that all previously written RBAC tests pass.
+
+Requirements:
+- Support user roles during registration.
+- Default new users to the `customer` role.
+- Include user roles inside JWT tokens.
+- Implement reusable role-based authorization middleware.
+- Restrict vehicle modification endpoints to administrators.
+- Preserve authenticated access for vehicle viewing endpoints.
+- Keep the implementation minimal and maintain compatibility with existing tests.
+
+### AI Assistance
+
+- Extended user registration to support roles.
+- Updated JWT generation to include user roles.
+- Implemented reusable `authorizeRoles` middleware.
+- Protected vehicle modification endpoints for administrators.
+- Updated authentication helpers and RBAC test utilities.
+- Verified administrator and customer access rules.
+
+### Outcome
+
+Successfully completed the GREEN phase for role-based authorization. The API now enforces administrator-only access for inventory modification while allowing authenticated users to browse inventory. All authentication, RBAC, and vehicle inventory tests passed successfully (57/57).
+
+---
+
