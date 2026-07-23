@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 jest.mock("mongoose", () => ({
   connect: jest.fn(),
 }));
@@ -7,7 +5,6 @@ jest.mock("mongoose", () => ({
 describe("database connection module", () => {
   beforeEach(() => {
     jest.resetModules();
-    jest.clearAllMocks();
     delete process.env.MONGO_URI;
   });
 
@@ -21,6 +18,7 @@ describe("database connection module", () => {
     process.env.MONGO_URI =
       "mongodb://127.0.0.1:27017/car-dealership";
 
+    const mongoose = require("mongoose");
     mongoose.connect.mockResolvedValueOnce({});
 
     const { connectToDatabase } = require("../src/config/database");
@@ -46,6 +44,7 @@ describe("database connection module", () => {
 
     const mockConnection = { readyState: 1 };
 
+    const mongoose = require("mongoose");
     mongoose.connect.mockResolvedValueOnce(mockConnection);
 
     const { connectToDatabase } = require("../src/config/database");
@@ -59,6 +58,7 @@ describe("database connection module", () => {
 
     const connectionError = new Error("Mongo connection failed");
 
+    const mongoose = require("mongoose");
     mongoose.connect.mockRejectedValueOnce(connectionError);
 
     const { connectToDatabase } = require("../src/config/database");
