@@ -4,14 +4,13 @@ import { loginUser, registerUser } from "../services/auth.service";
 
 const AuthContext = createContext(null);
 
-const parseJwtRole = (token) => {
-  if (!token) return "customer";
+const parseJwt = (token) => {
+  if (!token) return null;
   try {
     const payloadBase64 = token.split(".")[1];
-    const decodedJson = JSON.parse(atob(payloadBase64));
-    return decodedJson.role || "customer";
+    return JSON.parse(atob(payloadBase64));
   } catch {
-    return "customer";
+    return null;
   }
 };
 
@@ -32,12 +31,20 @@ export function AuthProvider({ children }) {
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
 
-    if (storedToken && storedUser) {
+    if (storedToken) {
       try {
-        const parsedUser = JSON.parse(storedUser);
-        const role = parsedUser.role || parseJwtRole(storedToken) || "customer";
+        const payload = parseJwt(storedToken);
+        let userObj = null;
+        if (storedUser) {
+          userObj = JSON.parse(storedUser);
+        }
+        const email = userObj?.email || payload?.email || "user@example.com";
+        const role = userObj?.role || payload?.role || "customer";
+
+        const restoredUser = { email, role };
         setToken(storedToken);
-        setUser({ ...parsedUser, role });
+        setUser(restoredUser);
+        localStorage.setItem("user", JSON.stringify(restoredUser));
       } catch {
         clearSession();
       }
@@ -60,7 +67,8 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (email, password) => {
     const data = await loginUser(email, password);
-    const role = parseJwtRole(data.token);
+    const payload = parseJwt(data.token);
+    const role = payload?.role || "customer";
     const authenticatedUser = { email, role };
 
     localStorage.setItem("token", data.token);
@@ -72,7 +80,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const register = useCallback(
-    (email, password) => registerUser(email, password),
+    (email, password, role = "customer") => registerUser(email, password, role),
     []
   );
 
