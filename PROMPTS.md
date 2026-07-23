@@ -1084,3 +1084,499 @@ Successfully completed the GREEN phase for role-based authorization. The API now
 
 ---
 
+## Session 44 - MongoDB Database Connection (RED)
+
+### User Prompt
+
+Write RED tests for adding MongoDB database connectivity to the application.
+
+**Requirements:**
+
+- Create tests for a reusable database connection module.
+- Mock the `mongoose` package.
+- Verify that `mongoose.connect()` is called with `process.env.MONGO_URI`.
+- Verify that the connection function can be imported correctly.
+- Only write failing tests.
+- Do not implement the database connection.
+- Do not modify application code.
+- Keep the tests focused only on database connectivity.
+
+**Success Criteria:**
+
+- The new database connection tests fail because the implementation does not yet exist.
+- All existing project tests continue to pass.
+
+### AI Assistance
+
+- Designed the RED tests for MongoDB connectivity.
+- Mocked the Mongoose connection.
+- Verified the expected connection behavior.
+- Ensured the tests remained isolated from the application.
+
+### Outcome
+
+Successfully completed the RED phase for MongoDB database connectivity. The application now contains failing tests that define the expected database connection behavior before implementation.
+
+---
+
+## Session 45 - MongoDB Database Connection (GREEN)
+
+### User Prompt
+
+The RED phase for MongoDB database connectivity has been completed.
+
+Implement the minimum production-ready code required to make all database connection tests pass.
+
+**Requirements:**
+
+- Create `src/config/database.js`.
+- Import Mongoose.
+- Export an async `connectDatabase()` function.
+- Connect using `mongoose.connect(process.env.MONGO_URI)`.
+- Do not hardcode the MongoDB URI.
+- Keep the implementation minimal.
+- Do not modify the tests.
+- Use CommonJS module syntax.
+
+**Success Criteria:**
+
+- All database connection tests pass.
+- All existing project tests continue to pass.
+- No unnecessary logic is introduced.
+
+### AI Assistance
+
+- Created the database configuration module.
+- Implemented MongoDB connection using Mongoose.
+- Configured the connection to use the environment variable.
+- Verified compatibility with all existing tests.
+
+### Outcome
+
+Successfully completed the GREEN phase for MongoDB database connectivity. The application now supports a centralized MongoDB connection module that serves as the foundation for MongoDB integration. All tests passed successfully.
+
+---
+
+## Session 46 - User Model Migration (RED)
+
+### User Prompt
+
+Write RED tests for migrating the User model from the in-memory structure to MongoDB.
+
+**Requirements:**
+
+- Create tests for `src/models/User.js`.
+- Verify that the User model exists.
+- Verify the schema contains:
+  - username
+  - password
+  - role
+  - createdAt
+- Verify that the default role is `customer`.
+- Only write failing tests.
+- Do not implement the model.
+- Keep the tests focused only on schema validation.
+
+**Success Criteria:**
+
+- The new User model tests fail because the model has not yet been implemented.
+- All existing project tests continue to pass.
+
+### AI Assistance
+
+- Designed RED tests for the MongoDB User schema.
+- Defined the required schema fields.
+- Verified the default user role.
+- Kept the tests independent from the rest of the application.
+
+### Outcome
+
+Successfully completed the RED phase for the MongoDB User model. The expected schema has been fully specified through failing unit tests.
+
+---
+
+## Session 47 - User Model Migration (GREEN)
+
+### User Prompt
+
+The RED phase for the MongoDB User model has been completed.
+
+Implement the minimum production-ready code required to make all User model tests pass.
+
+**Requirements:**
+
+- Create `src/models/User.js`.
+- Create a Mongoose schema.
+- Include:
+  - username
+  - password
+  - role
+  - createdAt
+- Default the role to `customer`.
+- Export the User model.
+- Keep the implementation minimal.
+- Do not modify any tests.
+- Use CommonJS module syntax.
+
+**Success Criteria:**
+
+- All User model tests pass.
+- All existing project tests continue to pass.
+- No unnecessary fields or logic are introduced.
+
+### AI Assistance
+
+- Created the Mongoose User schema.
+- Added the required fields.
+- Configured the default role.
+- Exported the model using CommonJS.
+- Verified compatibility with all existing tests.
+
+### Outcome
+
+Successfully completed the GREEN phase for the MongoDB User model. The application now includes a reusable User schema that forms the basis of the MongoDB persistence layer. All tests passed successfully.
+
+---
+
+## Session 48 - Vehicle Model Migration (RED)
+
+### User Prompt
+
+Write RED tests for migrating the Vehicle model from the in-memory structure to MongoDB.
+
+**Requirements:**
+
+- Create tests for `src/models/Vehicle.js`.
+- Verify that the Vehicle model exists.
+- Verify the schema contains:
+  - make
+  - model
+  - year
+  - price
+  - mileage
+  - fuelType
+  - transmission
+  - status
+  - createdAt
+- Only write failing tests.
+- Do not implement the model.
+- Keep the tests focused only on schema validation.
+
+**Success Criteria:**
+
+- The new Vehicle model tests fail because the model has not yet been implemented.
+- All existing project tests continue to pass.
+
+### AI Assistance
+
+- Designed RED tests for the MongoDB Vehicle schema.
+- Defined the required inventory fields.
+- Verified the expected schema structure.
+- Ensured the tests remained isolated from the application.
+
+### Outcome
+
+Successfully completed the RED phase for the MongoDB Vehicle model. The expected schema has been fully defined through failing unit tests before implementation.
+
+---
+
+## Session 49 - Vehicle Model Migration (GREEN)
+
+### User Prompt
+
+The RED phase for the MongoDB Vehicle model has been completed.
+
+Implement the minimum production-ready code required to make all Vehicle model tests pass.
+
+**Requirements:**
+
+- Create `src/models/Vehicle.js`.
+- Create a Mongoose schema.
+- Include:
+  - make
+  - model
+  - year
+  - price
+  - mileage
+  - fuelType
+  - transmission
+  - status
+  - createdAt
+- Export the Vehicle model.
+- Keep the implementation minimal.
+- Do not modify any tests.
+- Use CommonJS module syntax.
+
+**Success Criteria:**
+
+- All Vehicle model tests pass.
+- All existing project tests continue to pass.
+- No unnecessary fields or logic are introduced.
+
+### AI Assistance
+
+- Created the Mongoose Vehicle schema.
+- Added all required inventory fields.
+- Exported the Vehicle model using CommonJS.
+- Verified compatibility with all Vehicle model tests.
+
+### Outcome
+
+Successfully completed the GREEN phase for the MongoDB Vehicle model. The application now supports a reusable Vehicle schema for inventory persistence. All tests passed successfully.
+
+---
+
+## Session 50 - User Repository Migration (RED)
+
+### User Prompt
+
+Write RED tests for migrating the User Repository from the in-memory store to MongoDB.
+
+**Requirements:**
+
+- Create tests for `src/repositories/userRepository.js`.
+- Mock the MongoDB User model.
+- Test the following repository methods:
+  - `createUser()`
+  - `findUserByUsername()`
+  - `getAllUsers()`
+- Verify that each repository method delegates to the corresponding Mongoose model method.
+- Only write failing tests.
+- Do not implement the repository.
+- Keep the tests focused only on repository behavior.
+
+**Success Criteria:**
+
+- The new User Repository tests fail because the repository has not yet been implemented.
+- All existing project tests continue to pass.
+
+### AI Assistance
+
+- Designed RED tests for the User Repository.
+- Mocked the MongoDB User model.
+- Verified repository delegation to the model layer.
+- Kept the tests independent from controllers and services.
+
+### Outcome
+
+Successfully completed the RED phase for the MongoDB User Repository. The repository contract has been fully specified through failing unit tests before implementation.
+
+---
+
+## Session 51 - User Repository Migration (GREEN)
+
+### User Prompt
+
+The RED phase for the MongoDB User Repository has been completed.
+
+Implement the minimum production-ready code required to make all User Repository tests pass.
+
+**Requirements:**
+
+- Create `src/repositories/userRepository.js`.
+- Import the MongoDB User model.
+- Implement:
+  - `createUser()`
+  - `findUserByUsername()`
+  - `getAllUsers()`
+- Keep the implementation minimal.
+- Do not modify controllers, routes, middleware, authentication, or models.
+- Use CommonJS module syntax.
+
+**Success Criteria:**
+
+- All User Repository tests pass.
+- All existing project tests continue to pass.
+- No unnecessary logic or refactoring is introduced.
+
+### AI Assistance
+
+- Created the MongoDB User Repository.
+- Implemented repository methods using the Mongoose User model.
+- Separated persistence logic from business logic.
+- Verified repository behavior through mocked unit tests.
+
+### Outcome
+
+Successfully completed the GREEN phase for the MongoDB User Repository. The application now follows the Repository pattern for user persistence, improving modularity, maintainability, and testability. All tests passed successfully.
+
+---
+
+## Session 52 - Vehicle Repository Migration (RED)
+
+### User Prompt
+
+Write RED tests for migrating the Vehicle Repository from the in-memory store to MongoDB.
+
+**Requirements:**
+
+- Create tests for `src/repositories/vehicleRepository.js`.
+- Mock the MongoDB Vehicle model.
+- Test the following repository methods:
+  - `createVehicle()`
+  - `getAllVehicles()`
+  - `getVehicleById()`
+  - `updateVehicle()`
+  - `deleteVehicle()`
+  - `countVehicles()`
+- Verify that each repository method delegates to the corresponding Mongoose model method.
+- Only write failing tests.
+- Do not implement the repository.
+- Keep the tests focused only on repository behavior.
+
+**Success Criteria:**
+
+- The new Vehicle Repository tests fail because the repository has not yet been implemented.
+- All existing project tests continue to pass.
+
+### AI Assistance
+
+- Designed RED tests for the MongoDB Vehicle Repository.
+- Mocked the Mongoose Vehicle model.
+- Defined the expected CRUD and counting operations.
+- Ensured repository behavior was validated independently of controllers and services.
+
+### Outcome
+
+Successfully completed the RED phase for the MongoDB Vehicle Repository. The repository contract has been fully defined through failing unit tests before implementation.
+
+---
+
+## Session 53 - Vehicle Repository Migration (GREEN)
+
+### User Prompt
+
+The RED phase for the MongoDB Vehicle Repository has been completed.
+
+Implement the minimum production-ready code required to make all Vehicle Repository tests pass.
+
+**Requirements:**
+
+- Create `src/repositories/vehicleRepository.js`.
+- Import the MongoDB Vehicle model.
+- Implement:
+  - `createVehicle()`
+  - `getAllVehicles()`
+  - `getVehicleById()`
+  - `updateVehicle()`
+  - `deleteVehicle()`
+  - `countVehicles()`
+- Keep the implementation minimal.
+- Do not modify controllers, routes, middleware, services, authentication, or models.
+- Use CommonJS module syntax.
+
+**Success Criteria:**
+
+- All Vehicle Repository tests pass.
+- All existing project tests continue to pass.
+- No unnecessary logic or refactoring is introduced.
+
+### AI Assistance
+
+- Created the MongoDB Vehicle Repository.
+- Implemented CRUD operations using the Mongoose Vehicle model.
+- Added support for counting vehicle documents.
+- Maintained clear separation between persistence and business logic.
+- Verified repository behavior using mocked unit tests.
+
+### Outcome
+
+Successfully completed the GREEN phase for the MongoDB Vehicle Repository. The application now uses a dedicated repository layer for vehicle persistence, improving modularity, maintainability, and scalability. All tests passed successfully.
+
+---
+
+## Session 54 - User Service Migration (RED)
+
+### User Prompt
+
+Write RED tests for migrating the User Service from the in-memory store to the MongoDB User Repository.
+
+**Requirements:**
+
+- Create tests for `src/services/userService.js`.
+- Mock the User Repository in every test.
+- The service must use the repository instead of an in-memory array.
+
+Test the following methods:
+
+- `registerUser(userData)`
+  - Calls `createUser(userData)`
+  - Returns the created user.
+
+- `getUserByUsername(username)`
+  - Calls `findUserByUsername(username)`
+  - Returns the matching user.
+  - Returns `null` when the user does not exist.
+
+- `getUsers()`
+  - Calls `getAllUsers()`
+  - Returns all users.
+
+- Only write failing tests.
+- Do not implement the service.
+- Do not connect to MongoDB.
+- Mock all repository methods.
+- Do not modify controllers, routes, middleware, authentication, models, or repositories.
+
+**Success Criteria:**
+
+- All new User Service tests fail because the service has not yet been migrated.
+- All existing project tests continue to pass.
+
+### AI Assistance
+
+- Designed RED tests for the MongoDB User Service.
+- Mocked the User Repository.
+- Verified delegation of service methods to the repository layer.
+- Ensured business logic remained independent from persistence.
+
+### Outcome
+
+Successfully completed the RED phase for the MongoDB User Service migration. The expected service behavior has been fully specified through failing unit tests before implementation.
+
+---
+
+## Session 55 - User Service Migration (GREEN)
+
+### User Prompt
+
+The RED phase for the MongoDB User Service has been completed.
+
+Implement the minimum production-ready code required to make all User Service tests pass.
+
+**Requirements:**
+
+- Create or update `src/services/userService.js`.
+- Import the following functions from `src/repositories/userRepository.js`:
+  - `createUser`
+  - `findUserByUsername`
+  - `getAllUsers`
+- Implement and export:
+  - `registerUser(userData)`
+  - `getUserByUsername(username)`
+  - `getUsers()`
+- Keep the implementation minimal.
+- Do not modify repositories, models, controllers, routes, middleware, or authentication.
+- Do not add password hashing, validation, or JWT logic.
+- Use CommonJS module syntax.
+
+**Success Criteria:**
+
+- All User Service tests pass.
+- All existing project tests continue to pass.
+- No unnecessary logic or refactoring is introduced.
+
+### AI Assistance
+
+- Migrated the User Service to use the MongoDB User Repository.
+- Replaced direct data access with repository method calls.
+- Preserved the existing service interface.
+- Maintained separation between business logic and persistence.
+- Verified compatibility with all existing tests.
+
+### Outcome
+
+Successfully completed the GREEN phase for the MongoDB User Service migration. The application now delegates user persistence through the repository layer, strengthening the layered architecture while preserving existing functionality. All tests passed successfully.
+
+---
+
