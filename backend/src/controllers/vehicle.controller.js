@@ -1,13 +1,23 @@
 const vehicleService = require("../services/vehicleService");
 
-const toLegacyVehicle = (vehicle) => ({
-  id: vehicle.id || Number.parseInt(String(vehicle._id).slice(-6), 16),
-  make: vehicle.make,
-  model: vehicle.model,
-  category: vehicle.category,
-  price: vehicle.price,
-  quantity: vehicle.quantity,
-});
+const toLegacyVehicle = (vehicle) => {
+  const result = {
+    id: vehicle.id || Number.parseInt(String(vehicle._id).slice(-6), 16),
+    make: vehicle.make,
+    model: vehicle.model,
+    category: vehicle.category,
+    price: vehicle.price,
+    quantity: vehicle.quantity,
+  };
+
+  if (vehicle.year !== undefined) result.year = vehicle.year;
+  if (vehicle.mileage !== undefined) result.mileage = vehicle.mileage;
+  if (vehicle.fuelType !== undefined) result.fuelType = vehicle.fuelType;
+  if (vehicle.transmission !== undefined) result.transmission = vehicle.transmission;
+  if (vehicle.status !== undefined && vehicle.year !== undefined) result.status = vehicle.status;
+
+  return result;
+};
 
 const requiredFieldMessages = {
   make: "Make is required",

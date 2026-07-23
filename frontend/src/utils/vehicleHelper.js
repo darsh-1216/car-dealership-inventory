@@ -22,38 +22,13 @@ const vehicleImages = {
   ],
 };
 
-const defaultSpecsByModel = {
-  "Fortuner": { year: 2023, fuelType: "Diesel", transmission: "Automatic", mileage: 15000 },
-  "Glanza": { year: 2023, fuelType: "Petrol", transmission: "Manual", mileage: 12000 },
-  "Urban Cruiser Hyryder": { year: 2024, fuelType: "Hybrid", transmission: "Automatic", mileage: 6500 },
-  "City": { year: 2022, fuelType: "Petrol", transmission: "Automatic", mileage: 22000 },
-  "Elevate": { year: 2024, fuelType: "Petrol", transmission: "Manual", mileage: 8000 },
-  "i20": { year: 2023, fuelType: "Petrol", transmission: "Manual", mileage: 15000 },
-  "Verna": { year: 2024, fuelType: "Petrol", transmission: "Automatic", mileage: 7000 },
-  "Creta": { year: 2023, fuelType: "Diesel", transmission: "Automatic", mileage: 18000 },
-  "Altroz": { year: 2022, fuelType: "Diesel", transmission: "Manual", mileage: 26000 },
-  "Tigor": { year: 2023, fuelType: "CNG", transmission: "Manual", mileage: 14000 },
-  "Nexon": { year: 2024, fuelType: "Electric", transmission: "Automatic", mileage: 5000 },
-  "XUV 3XO": { year: 2024, fuelType: "Petrol", transmission: "Automatic", mileage: 4500 },
-  "Scorpio-N": { year: 2023, fuelType: "Diesel", transmission: "Manual", mileage: 16000 },
-  "Swift": { year: 2023, fuelType: "Petrol", transmission: "Manual", mileage: 20000 },
-  "Ciaz": { year: 2022, fuelType: "Petrol", transmission: "Automatic", mileage: 28000 },
-  "Sonet": { year: 2024, fuelType: "Diesel", transmission: "Automatic", mileage: 6000 },
-  "Astor": { year: 2023, fuelType: "Petrol", transmission: "Automatic", mileage: 17500 },
-  "3 Series Gran Limousine": { year: 2022, fuelType: "Petrol", transmission: "Automatic", mileage: 19000 },
-  "GLA": { year: 2023, fuelType: "Petrol", transmission: "Automatic", mileage: 11000 },
-  "A4": { year: 2021, fuelType: "Petrol", transmission: "Automatic", mileage: 32000 },
-  "Q3": { year: 2024, fuelType: "Petrol", transmission: "Automatic", mileage: 3500 },
-};
-
 export function getEnrichedVehicle(vehicle) {
   if (!vehicle) return vehicle;
 
-  const modelSpecs = defaultSpecsByModel[vehicle.model] || {};
   const category = vehicle.category || "SUV";
   const images = vehicleImages[category] || vehicleImages.SUV;
 
-  const idStr = String(vehicle.id || vehicle._id || vehicle.model);
+  const idStr = String(vehicle.id || vehicle._id || vehicle.model || "");
   let hash = 0;
   for (let i = 0; i < idStr.length; i++) {
     hash = (hash << 5) - hash + idStr.charCodeAt(i);
@@ -65,10 +40,10 @@ export function getEnrichedVehicle(vehicle) {
   return {
     ...vehicle,
     imageUrl: vehicle.imageUrl || vehicle.image || defaultImage,
-    year: vehicle.year ?? modelSpecs.year ?? 2023,
-    fuelType: vehicle.fuelType ?? modelSpecs.fuelType ?? "Petrol",
-    transmission: vehicle.transmission ?? modelSpecs.transmission ?? "Automatic",
-    mileage: vehicle.mileage ?? modelSpecs.mileage ?? 15000,
+    year: vehicle.year ?? null,
+    fuelType: vehicle.fuelType ?? null,
+    transmission: vehicle.transmission ?? null,
+    mileage: vehicle.mileage ?? null,
     status: vehicle.status || (vehicle.quantity > 0 ? "Available" : "Sold"),
   };
 }
