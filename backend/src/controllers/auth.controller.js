@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { hashPassword, verifyPassword } = require("../services/auth.service");
 
 // Temporary in-memory storage for registered users.
 // This will be replaced with a database in a later iteration.
@@ -8,7 +9,7 @@ const users = [];
 // This will be moved to environment variables in a future iteration.
 const JWT_SECRET = "secret-key";
 
-exports.registerUser = (req, res) => {
+exports.registerUser = async (req, res) => {
   // Validate required registration fields.
   if (!req.body.email || !req.body.password) {
     return res.status(400).json({
@@ -27,6 +28,7 @@ exports.registerUser = (req, res) => {
 
   const user = {
     ...req.body,
+    password: await hashPassword(req.body.password),
     role: req.body.role || "customer",
   };
 
@@ -38,7 +40,7 @@ exports.registerUser = (req, res) => {
   });
 };
 
-exports.loginUser = (req, res) => {
+exports.loginUser = async (req, res) => {
   // Validate required login fields.
   if (!req.body.email || !req.body.password) {
     return res.status(400).json({
@@ -48,13 +50,11 @@ exports.loginUser = (req, res) => {
 
   // Find a user with matching email and password.
   const user = users.find(
-    (registeredUser) =>
-      registeredUser.email === req.body.email &&
-      registeredUser.password === req.body.password
+    (registeredUser) => registeredUser.email === req.body.email
   );
 
   // Reject login if credentials are invalid.
-  if (!user) {
+  if (!user || !(await verifyPassword(req.body.password, user.password))) {
     return res.status(401).json({
       message: "Invalid email or password",
     });
