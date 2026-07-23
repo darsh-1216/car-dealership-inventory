@@ -5,13 +5,14 @@ const { connectToDatabase } = require("./config/database");
 
 const PORT = process.env.PORT || 5000;
 
-connectToDatabase()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error("Database connection failed", error);
-    process.exit(1);
+const startServer = () => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
+};
+
+connectToDatabase()
+  .catch((error) => {
+    console.error("Database connection failed; vehicle features are unavailable.", error);
+  })
+  .finally(startServer);
