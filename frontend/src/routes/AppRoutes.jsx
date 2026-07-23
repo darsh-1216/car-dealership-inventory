@@ -7,6 +7,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import AddVehicle from "../pages/vehicles/AddVehicle";
 import EditVehicle from "../pages/vehicles/EditVehicle";
 import Vehicles from "../pages/vehicles/Vehicles";
+import Profile from "../pages/profile/Profile";
 import NotFound from "../pages/errors/NotFound";
 
 function AppRoutes() {
@@ -21,6 +22,7 @@ function AppRoutes() {
           <Route path="/vehicles" element={<Vehicles />} />
           <Route path="/vehicles/add" element={<AddVehicle />} />
           <Route path="/vehicles/:id/edit" element={<EditVehicle />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />

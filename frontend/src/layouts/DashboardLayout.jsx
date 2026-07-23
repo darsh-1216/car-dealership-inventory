@@ -8,6 +8,7 @@ const pageTitles = {
   "/dashboard": "Dashboard",
   "/vehicles": "Vehicles",
   "/vehicles/add": "Add Vehicle",
+  "/profile": "Profile",
 };
 
 function DashboardLayout() {

@@ -4,6 +4,17 @@ import { loginUser, registerUser } from "../services/auth.service";
 
 const AuthContext = createContext(null);
 
+const parseJwtRole = (token) => {
+  if (!token) return "customer";
+  try {
+    const payloadBase64 = token.split(".")[1];
+    const decodedJson = JSON.parse(atob(payloadBase64));
+    return decodedJson.role || "customer";
+  } catch {
+    return "customer";
+  }
+};
+
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -23,8 +34,10 @@ export function AuthProvider({ children }) {
 
     if (storedToken && storedUser) {
       try {
+        const parsedUser = JSON.parse(storedUser);
+        const role = parsedUser.role || parseJwtRole(storedToken) || "customer";
         setToken(storedToken);
-        setUser(JSON.parse(storedUser));
+        setUser({ ...parsedUser, role });
       } catch {
         clearSession();
       }
@@ -47,7 +60,8 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (email, password) => {
     const data = await loginUser(email, password);
-    const authenticatedUser = { email };
+    const role = parseJwtRole(data.token);
+    const authenticatedUser = { email, role };
 
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(authenticatedUser));
@@ -68,6 +82,7 @@ export function AuthProvider({ children }) {
       token,
       loading,
       isAuthenticated: Boolean(token),
+      isAdmin: user?.role === "admin",
       login,
       register,
       logout,

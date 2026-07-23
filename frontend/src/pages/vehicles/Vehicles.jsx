@@ -1,15 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import EmptyState from "../../components/common/EmptyState";
 import ErrorState from "../../components/common/ErrorState";
 import VehicleCardSkeletons from "../../components/vehicles/VehicleCardSkeleton";
 import VehicleFilters from "../../components/vehicles/VehicleFilters";
 import VehicleGrid from "../../components/vehicles/VehicleGrid";
 import Pagination from "../../components/ui/Pagination";
+import useAuth from "../../hooks/useAuth";
 import { getVehicles } from "../../services/vehicle.service";
 
 const PAGE_SIZE = 12;
 
 function Vehicles() {
+  const { isAdmin } = useAuth();
   const [vehicles, setVehicles] = useState([]);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
@@ -76,6 +79,17 @@ function Vehicles() {
           <h1 className="text-2xl font-extrabold text-slate-900">Vehicle Inventory</h1>
           <p className="text-sm text-slate-500">Browse, search, and manage current dealership inventory.</p>
         </div>
+        {isAdmin && (
+          <Link
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-200 hover:bg-blue-700 transition"
+            to="/vehicles/add"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24">
+              <path d="M12 4.5v15m7.5-7.5h-15" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+            </svg>
+            Add Vehicle
+          </Link>
+        )}
       </div>
 
       <VehicleFilters

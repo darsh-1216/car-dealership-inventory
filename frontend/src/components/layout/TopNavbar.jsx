@@ -13,6 +13,7 @@ function TopNavbar({ title, user, onMenuClick, onLogout, isProfileOpen, onProfil
         {isProfileOpen && (
           <div className="absolute right-0 mt-2 w-48 rounded-lg border border-slate-200 bg-white p-1 shadow-lg">
             <p className="truncate px-3 py-2 text-xs text-slate-500">{user?.email || "User"}</p>
+            <a href="/profile" className="block w-full rounded-md px-3 py-2 text-left text-sm font-medium text-slate-700 hover:bg-slate-50" onClick={onProfileToggle}>My Profile</a>
             <button className="w-full rounded-md px-3 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50" onClick={onLogout} type="button">Logout</button>
           </div>
         )}
