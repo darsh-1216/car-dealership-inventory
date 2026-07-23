@@ -423,7 +423,8 @@ The following screenshots showcase the key features of the Car Dealership Invent
 ## 🔐 Login Page
 
 <p align="center">
-  <img src="screenshots/LoginPage.png" alt="Login Page" width="700">
+  <img width="1770" height="853" alt="LoginPage" src="https://github.com/user-attachments/assets/5f5c4b91-3c8f-4229-bd6a-f8a6451a5f08" />
+
 </p>
 
 ---
@@ -431,7 +432,8 @@ The following screenshots showcase the key features of the Car Dealership Invent
 ## 📝 Registration Page
 
 <p align="center">
-  <img src="screenshots/RegisterPage.png" alt="Registration Page" width="700">
+ <img width="1752" height="848" alt="RegisterPage" src="https://github.com/user-attachments/assets/715dfd6b-a21c-4cb0-8f02-ffbdc78ec4fc" />
+
 </p>
 
 ---
@@ -439,7 +441,8 @@ The following screenshots showcase the key features of the Car Dealership Invent
 ## 🏠 Dashboard
 
 <p align="center">
-  <img src="screenshots/Dashboard.png" alt="Dashboard" width="700">
+ <img width="1915" height="879" alt="Dashboard" src="https://github.com/user-attachments/assets/235b97d3-f1e1-4f78-bc43-ff645550fa89" />
+
 </p>
 
 ---
@@ -447,15 +450,16 @@ The following screenshots showcase the key features of the Car Dealership Invent
 ## 🚘 Vehicle Inventory
 
 <p align="center">
-  <img src="screenshots/Vehicles.png" alt="Vehicle Inventory" width="700">
+ <img width="1919" height="876" alt="Vehicles" src="https://github.com/user-attachments/assets/704409f1-0f9a-49d5-a396-8b8f19baa709" />
 </p>
 
 ---
 
+
 ## 👤 Profile Page
 
 <p align="center">
-  <img src="screenshots/Profile.png" alt="Profile Page" width="700">
+ <img width="1912" height="871" alt="Profile" src="https://github.com/user-attachments/assets/db131c7b-ad36-44ae-81cc-2fb08c4fb887" />
 </p>
 
 ---
