@@ -1580,3 +1580,188 @@ Successfully completed the GREEN phase for the MongoDB User Service migration. T
 
 ---
 
+## Session 56 - Purchase Vehicle Feature (RED)
+
+### User Prompt
+
+Follow the RED phase of Test-Driven Development for the Purchase Vehicle feature.
+
+Requirements:
+
+- Create failing Jest tests only.
+- Do not implement production code.
+- Cover:
+  - Unauthorized requests
+  - Forbidden access
+  - Vehicle not found
+  - Successful purchase
+  - Quantity reduction
+  - Status transition to Sold when stock reaches zero
+  - Invalid purchase quantity
+  - Missing quantity
+
+### AI Assistance
+
+- Created a dedicated Jest test suite for the Purchase Vehicle endpoint.
+- Covered authentication, authorization, validation, and business logic scenarios.
+- Followed the existing project testing conventions.
+- Left production code unchanged.
+
+### Outcome
+
+Successfully completed the RED phase for the Purchase Vehicle feature. Existing tests continued passing while the newly added Purchase tests failed as expected.
+
+---
+
+## Session 57 - Backend MongoDB Migration Completion & Purchase Feature (GREEN)
+
+### User Prompt
+
+The backend currently contains a mix of legacy in-memory data access and MongoDB repositories.
+
+Complete the migration by removing the remaining in-memory implementation while implementing the Purchase Vehicle feature.
+
+Requirements:
+
+- Keep the architecture:
+  - Routes
+  - Controllers
+  - Services
+  - Repositories
+  - MongoDB
+- Remove remaining dependencies on the legacy in-memory data store.
+- Complete the Purchase Vehicle feature.
+- Preserve existing API behavior.
+- Ensure all existing tests continue to pass.
+
+### AI Assistance
+
+- Identified the remaining legacy in-memory implementation.
+- Completed the migration to a consistent MongoDB architecture.
+- Refactored controllers, services, and repositories.
+- Removed remaining in-memory dependencies.
+- Implemented the Purchase Vehicle feature.
+- Preserved existing API behavior.
+
+### Outcome
+
+Successfully completed the backend migration to a fully MongoDB-based architecture. The Purchase Vehicle feature was fully implemented, and all tests passed successfully (110/110).
+
+---
+
+## Session 58 - Vehicle Restock Feature (RED)
+
+### User Prompt
+
+Follow the RED phase of Test-Driven Development for the Vehicle Restock feature.
+
+Requirements:
+
+- Create failing Jest tests only.
+- Do not implement production code.
+- Cover:
+  - Unauthorized requests
+  - Forbidden access
+  - Vehicle not found
+  - Successful restock
+  - Quantity update
+  - Sold to Available transition
+  - Invalid quantity
+  - Missing quantity
+
+### AI Assistance
+
+- Created a dedicated Jest test suite for the Vehicle Restock endpoint.
+- Covered authentication, authorization, validation, and business logic scenarios.
+- Followed the existing project testing conventions.
+- Left production code unchanged.
+
+### Outcome
+
+Successfully completed the RED phase for the Vehicle Restock feature. Existing tests continued passing while the newly added Restock tests failed as expected.
+
+---
+
+## Session 59 - Vehicle Restock Feature (GREEN)
+
+### User Prompt
+
+Implement the minimum production code required to make all Vehicle Restock tests pass.
+
+Requirements:
+
+- Implement:
+  POST /api/vehicles/:id/restock
+- Keep the existing layered architecture.
+- Preserve existing API behavior.
+- Do not introduce unrelated changes.
+
+### AI Assistance
+
+- Implemented the Vehicle Restock endpoint.
+- Added controller, service, and repository support for restocking.
+- Updated vehicle quantity after restocking.
+- Automatically changed vehicle status from Sold to Available when stock became available.
+- Preserved the existing architecture and API behavior.
+
+### Outcome
+
+Successfully completed the GREEN phase for the Vehicle Restock feature. All existing tests and newly added Restock tests passed successfully.
+
+---
+
+## Session 60 - Password Hashing (RED)
+
+### User Prompt
+
+Follow the RED phase of Test-Driven Development for password hashing.
+
+Requirements:
+
+- Write failing authentication tests only.
+- Do not implement production code.
+- Cover:
+  - Password hashing during registration
+  - Password verification during login
+  - Authentication behavior
+
+### AI Assistance
+
+- Added failing authentication tests for password hashing.
+- Covered registration and login scenarios.
+- Kept the production code unchanged.
+- Followed the existing authentication testing style.
+
+### Outcome
+
+Successfully completed the RED phase for password hashing. Existing tests continued passing while the newly added password hashing tests failed as expected.
+
+---
+
+## Session 61 - Password Hashing (GREEN)
+
+### User Prompt
+
+Implement secure password hashing using bcrypt.
+
+Requirements:
+
+- Hash passwords during registration.
+- Verify passwords using bcrypt.compare() during login.
+- Preserve the existing JWT authentication flow.
+- Do not introduce unrelated refactoring.
+
+### AI Assistance
+
+- Integrated bcrypt into the authentication flow.
+- Implemented password hashing before storing users.
+- Added password verification during login.
+- Preserved the existing JWT authentication flow.
+- Maintained the existing layered architecture.
+
+### Outcome
+
+Successfully completed the GREEN phase for password hashing. All authentication tests passed successfully, and passwords are now securely stored using bcrypt.
+
+---
+
