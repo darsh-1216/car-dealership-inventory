@@ -53,6 +53,12 @@ exports.createVehicle = (req, res) => {
   });
 };
 
+exports.getVehicleCount = (req, res) => {
+  return res.status(200).json({
+    totalVehicles: vehicles.length,
+  });
+};
+
 exports.getVehicles = (req, res) => {
   const { page, limit } = req.query;
 
